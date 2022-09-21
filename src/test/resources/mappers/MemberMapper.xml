@@ -4,6 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.sunrise.spring.dao.MemberDAO">
   <select id="getEmail" resultType="String">
-    select email from member where id = #{id}
+    select me_email from member
   </select>
 </mapper>
