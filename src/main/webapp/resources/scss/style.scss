@@ -1,24 +1,26 @@
 /*
-* Template Name: Property
+* Template Name: Homespace
 * Template Author: Untree.co
-* Template License: https://creativecommons.org/licenses/by/3.0/
-* Author URI: https://untree.co/
-
-* Twitter: https://twitter.com/Untree_co
-* Facebook: https://web.facebook.com/Untree.co/
+* Tempalte URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
 */
-$primary: #00204a;
-$secondary: #005555;
-$font-family-sans-serif: 'Work Sans', sans-serif;
-$font-family-sans-serif-secondary: 'Work Sans', sans-serif;
+@import "functions";
+@import "variables";
+@import "mixins";
 
-@import 'bootstrap/mixins';
-@import 'bootstrap/functions';
-@import 'bootstrap/variables';
+$primary: #009ECE;
+$secondary: #009ECE;
+$black: #000000;
+$white: #ffffff;
+$grey: #5b5656;
+$heading_color: #000;
+$text_light_color: #a0a4ab;
 
-@import 'bootstrap/bootstrap';
+$font-family: 'Playfair Display', serif;
+$font-family-sans-serif: 'Lato', sans-serif;
 
-@import 'components/site-navbar';
-@import 'components/site-base';
-@import 'components/site-blocks';
-@import 'components/site-footer';
+@import 'site-base';
+@import 'site-navbar';
+@import 'site-blocks';
+@import 'site-elements';
+@import 'site-footer';

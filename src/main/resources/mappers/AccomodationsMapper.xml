@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sunrise.spring.dao.AccommodationsDAO">
+	<!-- 고시원 등록신청 QnA -->
+	<insert id="insertAccommodations" useGeneratedKeys="true" keyProperty="ac_num">
+		insert into accommodations(ac_name, ac_me_id, ac_representation, ac_phone, ac_post_code, ac_addr, ac_addr_detail, ac_to_room, ac_floor, ac_content, ac_permit)
+		value(#{ac_name}, #{ac_me_id}, #{ac_representation}, #{ac_phone}, #{ac_post_code}, #{ac_addr}, #{ac_addr_detail}, #{ac_to_room}, #{ac_floor},#{ac_content}, #{ac_permit})
+	</insert>
+	<select id="selectAccommodationsList" resultType="kr.sunrise.spring.vo.AccommodationsVO">
+		select accommodations.*, fi_name as ac_thumb from accommodations join 
+			file on ac_num = fi_same_num
+		    where fi_ta_name like 'accommodations' group by fi_same_num;
+	</select>
+	<select id="selectAccommodationsTotalCount" resultType="int">
+		select count(*) from accommodations where ac_permit ='Y'
+			and ac_name like concat('%',#{search},'%')
+	</select>
+	<select id="selectAccommodations" resultType="kr.sunrise.spring.vo.AccommodationsVO">
+		select * from accommodations where ac_num = #{ac_num}
+	</select>
+	<select id="selectFileList" resultType="kr.sunrise.spring.vo.FileVO">
+		select * from file where fi_num = #{fi_num}
+	</select>
+</mapper>

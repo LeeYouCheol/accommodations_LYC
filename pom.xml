@@ -154,7 +154,7 @@
 		    <artifactId>tiles-template</artifactId>
 		    <version>${org.apache.tiles-version}</version>
 		</dependency>
-		<!-- mybatis 의존성 추가 -->
+		<!-- DB연동 -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
@@ -177,6 +177,84 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
 		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!-- lombok -->
+		<dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>1.18.24</version>
+		</dependency>
+		<!-- 비밀번호 암호화 -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>4.1.0.RELEASE</version>
+		</dependency>
+		  <!--스프링시큐리티 core 라이브러리-->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>4.1.0.RELEASE</version>
+		</dependency>
+		  <!--스프링시큐리티 config 라이브러리-->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>4.1.0.RELEASE</version>
+		</dependency>
+		<!-- json 사용 라이브러리 -->
+		<dependency>
+    		<groupId>org.codehaus.jackson</groupId>
+    		<artifactId>jackson-mapper-asl</artifactId>
+    		<version>1.9.13</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-core</artifactId>
+    		<version>2.9.4</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.9.6</version>
+		</dependency>
+		<!-- 이메일보내기 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.3</version>
+		</dependency>
+		<!-- ajax json 사용 라이브러리 -->
+		<dependency>
+    		<groupId>org.codehaus.jackson</groupId>
+    		<artifactId>jackson-mapper-asl</artifactId>
+    		<version>1.9.13</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-core</artifactId>
+    		<version>2.9.4</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.9.4</version>
+		</dependency>
+		<!-- 파일 업로드 의존성 -->
+		<dependency>
+		    <groupId>org.imgscalr</groupId>
+		    <artifactId>imgscalr-lib</artifactId>
+		    <version>4.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.3.2</version>
 		</dependency>
 	</dependencies>
     <build>

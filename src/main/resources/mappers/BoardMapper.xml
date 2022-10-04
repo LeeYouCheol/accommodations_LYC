@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sunrise.spring.dao.QnaDAO">
+	<!-- QnA등록 쿼리 -->
+	<insert id="insertQuestion" useGeneratedKeys="true" keyProperty="qu_num">
+		insert into question(qu_title, qu_me_id, qu_where, qu_content, qu_secret, qu_type, qu_ori_num)
+		<if test="qu_ori_num == 0">
+			select #{qu_title}, #{qu_me_id}, #{qu_where}, #{qu_content}, #{qu_secret}, #{qu_type}, ifnull(max(qu_num),0)+1 from question
+		</if>
+	</insert>
+	<!-- 파일업로드 쿼리 -->
+	<insert id="insertFile" useGeneratedKeys="true" keyProperty="fi_num">
+		insert into file(fi_name, fi_ori_name, fi_ta_name, fi_same_num) values(#{fi_name}, #{fi_ori_name}, #{fi_ta_name}, #{fi_same_num})
+	</insert>
+	<!-- QnA 리스트 쿼리 -->
+	<select id="selectQuestionList" resultType="kr.sunrise.spring.vo.QuestionVO">
+		select * from question where qu_where like concat('%',#{qu_where}, '%')
+		<if test="qu_where == 'moa'">
+			and qu_name like concat('%',#{cri.search},'%')
+		</if>
+		order by qu_ori_num desc, qu_num asc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectQuestionTotalCount" resultType="int">
+		select count(*) from question where qu_where like concat('%',#{qu_where}, '%')
+		<if test="qu_where == 'moa'">
+			and qu_title like concat('%',#{cri.search},'%')
+		</if>
+	</select>
+	<!-- QnA 상세 -->
+	<select id="selectQuestion" resultType="kr.sunrise.spring.vo.QuestionVO">
+		select * from question where qu_num = #{qu_num}
+	</select>
+	
+	<!-- QnA 수정시 -->
+	<update id="updateQuestion">
+		update question set
+			qu_title = #{qu_title},
+			qu_content = #{qu_content},
+		where qu_num = #{qu_num}
+	</update>
+	<select id="selectFile" resultType="kr.sunrise.spring.vo.FileVO">
+		select * from file where fi_num = #{fi_num}
+	</select>
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fi_num}
+	</delete>
+	<!-- QnA 삭제 -->
+	<delete id="deleteQuestion">
+		delete from board where qu_num = #{qu_num}
+	</delete>
+</mapper>

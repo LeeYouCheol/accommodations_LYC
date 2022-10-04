@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 29/11/2020 06:42
+    Creation date: 25/05/2020 02:32
     */
 
     @font-face {
@@ -37,16 +37,24 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-house-2:before { content: "\f100"; }
-.flaticon-building:before { content: "\f101"; }
-.flaticon-house:before { content: "\f102"; }
-.flaticon-house-1:before { content: "\f103"; }
-.flaticon-house-3:before { content: "\f104"; }
-.flaticon-house-4:before { content: "\f105"; }
+    .flaticon-building:before { content: "\f100"; }
+.flaticon-building-1:before { content: "\f101"; }
+.flaticon-bathtub:before { content: "\f102"; }
+.flaticon-bed:before { content: "\f103"; }
+.flaticon-house-size:before { content: "\f104"; }
+.flaticon-garage:before { content: "\f105"; }
+.flaticon-map:before { content: "\f106"; }
+.flaticon-smartphone:before { content: "\f107"; }
+.flaticon-shower:before { content: "\f108"; }
+.flaticon-search-home:before { content: "\f109"; }
     
-    $font-Flaticon-house-2: "\f100";
-    $font-Flaticon-building: "\f101";
-    $font-Flaticon-house: "\f102";
-    $font-Flaticon-house-1: "\f103";
-    $font-Flaticon-house-3: "\f104";
-    $font-Flaticon-house-4: "\f105";
+    $font-Flaticon-building: "\f100";
+    $font-Flaticon-building-1: "\f101";
+    $font-Flaticon-bathtub: "\f102";
+    $font-Flaticon-bed: "\f103";
+    $font-Flaticon-house-size: "\f104";
+    $font-Flaticon-garage: "\f105";
+    $font-Flaticon-map: "\f106";
+    $font-Flaticon-smartphone: "\f107";
+    $font-Flaticon-shower: "\f108";
+    $font-Flaticon-search-home: "\f109";
