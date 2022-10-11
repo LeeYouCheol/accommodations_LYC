@@ -23,15 +23,7 @@ public class FileServiceImp implements FileService{
 		if(files == null || files.length == 0)
 			return ;
 		for(MultipartFile file : files) {
-			if(file.getOriginalFilename().length() == 0)
-				continue;
-			try {
-				String fi_name = UploadFileUtils.uploadFileUUID(uploadPath, file.getOriginalFilename(), file.getBytes());
-				FileVO fileVo = new FileVO(fi_name, file.getOriginalFilename(), fi_ta_name, fi_same_num);
-				fileDao.insertFile(fileVo);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			insertFiles(file, fi_ta_name, fi_same_num);
 		}
 	}
 	public void deleteFile(FileVO fileVo) {
@@ -46,5 +38,19 @@ public class FileServiceImp implements FileService{
 			return null;
 		return fileDao.selectFileList(fi_ta_name, fi_same_num);
 	}
-	
+	//첨부파일 업로드 메소드
+	public FileVO insertFiles(MultipartFile file, String fi_ta_name, int fi_same_num) {
+		if(file == null || file.getOriginalFilename().length() == 0)
+			return null;
+		
+		try {
+			String fi_name = UploadFileUtils.uploadFileUUID(uploadPath, file.getOriginalFilename(), file.getBytes());
+			FileVO fileVo = new FileVO(fi_name, file.getOriginalFilename(), fi_ta_name, fi_same_num);
+			fileDao.insertFile(fileVo);
+			return fileVo;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

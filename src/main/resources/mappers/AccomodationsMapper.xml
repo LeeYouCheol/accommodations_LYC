@@ -8,6 +8,10 @@
 		insert into accommodations(ac_name, ac_me_id, ac_representation, ac_phone, ac_post_code, ac_addr, ac_addr_detail, ac_to_room, ac_floor, ac_content, ac_permit)
 		value(#{ac_name}, #{ac_me_id}, #{ac_representation}, #{ac_phone}, #{ac_post_code}, #{ac_addr}, #{ac_addr_detail}, #{ac_to_room}, #{ac_floor},#{ac_content}, #{ac_permit})
 	</insert>
+	<insert id="insertFloorMap">
+		insert into floorMap(fm_ac_num, fm_fi_num, fm_floor)
+		value(#{fm_ac_num}, #{fm_fi_num}, #{fm_floor})
+	</insert>
 	<select id="selectAccommodationsList" resultType="kr.sunrise.spring.vo.AccommodationsVO">
 		select accommodations.*, fi_name as ac_thumb from accommodations join 
 			file on ac_num = fi_same_num
@@ -20,7 +24,21 @@
 	<select id="selectAccommodations" resultType="kr.sunrise.spring.vo.AccommodationsVO">
 		select * from accommodations where ac_num = #{ac_num}
 	</select>
-	<select id="selectFileList" resultType="kr.sunrise.spring.vo.FileVO">
-		select * from file where fi_num = #{fi_num}
+	<select id="selectAccommodationsName" resultType="kr.sunrise.spring.vo.AccommodationsVO">
+		select * from accommodations where ac_name = #{ac_name}
+	</select>
+	<insert id="insertRoom" useGeneratedKeys="true" keyProperty="ro_code">
+		insert into room(ro_code, ro_ac_num, ro_floor, ro_type, ro_num, ro_content, ro_price, ro_premium)
+		value(#{ro_code}, #{ro_ac_num}, #{ro_floor}, #{ro_type}, #{ro_num}, #{ro_content}, #{ro_price}, #{ro_premium})
+	</insert>
+	<insert id="insertSpec">
+		insert into spec(sp_ro_code, sp_bed, sp_table, sp_chair, sp_hit, sp_bathroom, sp_shower, sp_refrigerator, sp_window)
+		value(#{sp_ro_code}, #{sp_bed}, #{sp_table}, #{sp_chair}, #{sp_hit}, #{sp_bathroom}, #{sp_shower}, #{sp_refrigerator}, #{sp_window})
+	</insert>
+	<select id="selectMapList" resultType="kr.sunrise.spring.vo.FloorMapVO">
+		select * from floorMap join file on fm_fi_num = fi_num where fm_ac_num = #{ac_num}
+	</select>
+	<select id="selectRoomList" resultType="kr.sunrise.spring.vo.RoomVO">
+		select * from room where ro_ac_num = #{ac_num}
 	</select>
 </mapper>

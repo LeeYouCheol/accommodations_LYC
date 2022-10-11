@@ -14,7 +14,8 @@
 	<delete id="deleteFile">
 		delete from file where fi_num = #{fi_num}
 	</delete>
-	<select id="selectFileList" resultType="kr.sunrise.spring.vo.QuestionVO">
-		select * from file where fi_ta_name like "question" and fi_same_num = #{qu_num}
+	
+	<select id="selectFileList" resultType="kr.sunrise.spring.vo.FileVO"> 
+		select * from file where fi_ta_name like #{fi_ta_name} and fi_same_num = #{fi_same_num}
 	</select>
 </mapper>

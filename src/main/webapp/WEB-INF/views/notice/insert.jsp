@@ -52,12 +52,12 @@ th{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A 수정</h2>
+				<h2 class="text-secondary heading-2">공지사항등록</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-9 bg-white p-5">
-				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/qna/question/update"></c:url>" method="post" enctype="multipart/form-data">
+				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/notice/insert"></c:url>" method="post" enctype="multipart/form-data">
 					<table>
 						<colgroup>
 							<col style="width:10%">
@@ -67,94 +67,74 @@ th{
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">문의유형</th>
+								<th scope="row">등록위치</th>
 								<td>
-									<input class="form-control" type="text" value="${question.qu_type}" readonly>
+									<select class="form-control" name="no_where" id="no_where">
+										<option value="0">문의위치</option>
+										<c:if test="${user.me_authority == '10'}">
+											<option value="moa">사이트</option>
+										</c:if>
+										<c:if test="${user.me_authority == '2'}">
+											<option value="acc">고시원</option>
+										</c:if>
+									</select>
 								</td>
 								<th scope="row">작성자</th>
 								<td>
-									<input class="form-control" type="text"value="${question.qu_me_id}" readonly>
+									<input class="form-control" type="text" name="no_me_id" value="${user.me_id}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
 								<td colspan="6">
-									<input class="form-control col-14" type="text" name="qu_title" id="qu_title" value="${question.qu_title}">
+									<input class="form-control col-14" type="text" name="no_title" id="no_title">
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content">${question.qu_content}</textarea>
+									<textarea style="width:700px; height:150px;" name="no_content" id="no_content"></textarea>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">첨부파일</th>
 								<td>
-									<div class="form-group box-files">
-										<c:forEach items="${fileList}" var="file">
-											<a class="form-control" href="javascript:0;">
-												<span>${file.fi_ori_name}</span>
-												<span class="btn-close" data-target="${file.fi_num }">X</span>
-											</a>
-										</c:forEach>
-										<c:forEach begin="1" end="${3-fileList.size()}">
-											<input type="file" class="form-control" name="files">
-										</c:forEach>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th>비밀글</th>
-								<td>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" <c:if test="${question.qu_secret == '1'}">checked</c:if>>비밀글을 원하면 체크 해주세요.
+									<div class="form-group">
+										<input type="file" class="form-control file" name="files">
+										<input type="file" class="form-control file" name="files">
+										<input type="file" class="form-control file" name="files">
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<button class="btn btn-primary float-right mt-4">QnA수정</button>
+					<button class="btn btn-primary float-right mt-4">공지사항등록</button>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-<div id="overlayer"></div>
-<div class="loader">
-	<div class="spinner-border" role="status">
-		<span class="sr-only">Loading...</span>
-	</div>
-</div>
 <script type="text/javascript">
 $(function(){
-	$('[name=qu_content]').summernote({
+	$('[name=no_content]').summernote({
     placeholder: '문의 내용을 입력하세요.',
     tabsize: 2,
     height: 400
   });
 	$('form').submit(function(){
-		let qu_title = $('[name=qu_title]').val();
-		if(qu_title == ''){
+		let no_title = $('[name=no_title]').val();
+		if(no_title == ''){
 			alert('제목을 입력하세요.');
-			$('[name=qu_title]').focus();
+			$('[name=no_title]').focus();
 			return false;
 		}
-		let qu_content = $('[name=qu_content]').val();
-		if(qu_content == ''){
+		let no_content = $('[name=no_content]').val();
+		if(no_content == ''){
 			alert('내용을 입력하세요.');
-			$('[name=qu_content]').focus();
+			$('[name=no_content]').focus();
 			return false;
 		}
 	});
-	$(document).on('click', '.btn-close', function(){
-		let fi_num = $(this).data('target');
-		$(this).parent().remove();
-		let str = '';
-		str += '<input type="file" class="form-control" name="files">';
-		str += '<input type="hidden" name="nums" value="'+fi_num+'">';
-		$('.box-files').append(str);
-	})
 })
 </script>
 </body>

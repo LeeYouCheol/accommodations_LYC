@@ -43,13 +43,12 @@
 
     <div class="untree_co_slider">
       <div class="item">
-        <img src="<c:url value="/resources/images/property_1-min.jpg"></c:url>" alt="Image" class="img-fluid">
+        <img src="<c:url value="/resources/images/해돋이고시원_전경.jpg"></c:url>" alt="Image" class="img-fluid" style="width:1392px; height:560px;">
 
         <div class="property-contents">
-          <strong class="current-price text-secondary">$999,000</strong>
-          <span class="old-price">$1,000,299</span>
+          <strong class="current-price text-secondary">가격문의</strong>
           <h2>
-            <a href="#"><span>2 Zwar Place, Florey</span></a>
+            <a href="<c:url value="/accommodations/select/${accommodations.ac_num }"></c:url>"> <span>해돋이고시원</span></a>
           </h2>
         </div>
 

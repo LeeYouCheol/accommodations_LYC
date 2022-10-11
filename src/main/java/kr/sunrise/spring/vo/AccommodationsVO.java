@@ -15,8 +15,8 @@ public class AccommodationsVO {
 	private String ac_addr_detail;
 	private int ac_to_room;
 	private int ac_floor;
-	private String ac_permit;
-	private String ac_thumb;
 	private String ac_content;
+	private String ac_thumb; //sql에는 없지만 vo에는 있어야한다.
+	private String ac_permit="S";
 	
 }

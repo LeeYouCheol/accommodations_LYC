@@ -24,24 +24,25 @@
 	top:10px; left: 10px;
 }
 #content{
-	display: table; width: 100%; margin-bottom: 50px; padding: 20px 0;
-	border: 1px solid #dfdfdf; border-radius: 4px; box-sizing: border-box;
-	background-color: #fff; overflow: hidden;
+	border: 1px solid #dfdfdf; border-radius: 4px; overflow: hidden; background-color: #fff;
 }
-.title{
-	font-size:13px;
+table{
+	width: 100%; border: none; border-spacing: 0; border-collapse: collapse;
 }
-#box{
-	position: relative; margin-bottom:50px; display:inline-block; padding:70px;
+#head-item{
+	color: #353535; padding: 15px 0; text-align: center; font-size: 18px;
 }
-.phone{
-	display: flex;
+#head{
+	border-bottom: 1px solid #e1e1e1;
 }
-.rn-box{
-	display: flex;
+#body-item{
+	 text-align: center; color: black;
+}
+.btn{
+	margin-left:3px; margin-righ:3px;
 }
 </style>
-<title>회원가입</title>
+<title>마이페이지</title>
 </head>
 
 <body>
@@ -60,100 +61,62 @@
 			<h6>마이페이지</h6>
 		</div>
       	<div class="row justify-content-center" id="box">
-      		<div class="mypage businessSignup">
-      			<h5 class="text-secondary heading-5">사업자 가입 신청</h5>
-	        	<div class="content col-lg-6" id="content">
-	        		<table>
-	        			<colgroup>
-							<col style="width:160px;">
-							<col style="width:100px;">
+      		<div class="mypage accomodations">
+      			<h5 class="text-secondary heading-5">고시원관리</h5>
+	        	<div class="content" id="content">
+	        		<table border="1">
+						<colgroup>
 							<col style="width:auto;">
-							<col style="width:70px;">
 							<col style="width:150px;">
 							<col style="width:160px;">
+							<col style="width:auto;">
+							<col style="width:auto;">
 	        			</colgroup>
-	        			<thead>
+	        			<thead id="head">
 	        				<tr>
-	        					<th>신청인</th>
-	        					<th>아이디</th>
-	        					<th>사업자등록번호</th>
-	        					<th>수락</th>
+	        					<th id="head-item" scope="col" class="num">고시원번호</th>
+	        					<th id="head-item" scope="col" class="thumb">이미지</th>
+	        					<th id="head-item" scope="col" class="name">이름</th>
+	        					<th id="head-item" scope="col" class="management">신청여부</th>
+	        					<th id="head-item" scope="col" class="statement">관리</th>
 	        				</tr>
 	        			</thead>
 	        			<tbody>
-	        				<tr>
-	        					<td>${member.me_id}</td>
-	        				</tr>
+
+		        				<c:forEach items="${list}" var="accommodations">
+									<tr>
+										<td id="body-item">${accommodations.ac_num}</td>
+										<td id="body-item">
+											<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
+										</td>
+										<td id="body-item">${accommodations.ac_name}</td>
+										<td id="body-item">
+											<c:if test="${accommodations.ac_permit == 'S'}">
+												대기
+											</c:if>
+											<c:if test="${accommodations.ac_permit == 'Y'}">
+												등록
+											</c:if>
+											<c:if test="${accommodations.ac_permit == 'N'}">
+												취소
+											</c:if>
+										</td>
+										<td>
+											<c:if test="${accommodations.ac_permit !='Y'}">
+												<a class="btn btn-outline-light text-dark" href="<c:url value="/admin/select/${accommodations.ac_num}"></c:url>">상세내용</a>
+											</c:if>
+											<c:if test="${accommodations.ac_permit !='Y'}">
+												<a class="btn btn-outline-primary" href="<c:url value=""></c:url>">등록수락</a>
+											</c:if>
+											<a class="btn btn-outline-dark" href="<c:url value=""></c:url>">등록보류</a>
+											<c:if test="${accommodations.ac_permit !='S'}">
+												<a class="btn btn-outline-danger" href="<c:url value=""></c:url>">등록취소</a>
+											</c:if>
+										</td>
+									</tr>
+								</c:forEach>
+							
 	        			</tbody>
-	        		</table>
-	        	</div>
-	        </div>
-	        <div class="mypage acc">
-	        	<h5 class="text-secondary heading-5">고시원 등록 신청</h5>
-	        	<div class="content col-lg-6" id="content">
-	        		<table>
-	        			<colgroup>
-							<col style="width:160px;">
-							<col style="width:100px;">
-							<col style="width:auto;">
-							<col style="width:70px;">
-							<col style="width:150px;">
-							<col style="width:160px;">
-	        			</colgroup>
-	        			<thead>
-	        				<tr>
-	        					<th scope="col" class="thumb">이미지</th>
-	        					<th scope="col" class="name">고시원이름</th>
-	        					<th scope="col" class="representation">대표자</th>
-	        					<th scope="col" class="id">아이디</th>
-	        				</tr>
-	        			</thead>
-	        		</table>
-	        	</div>
-	        </div>
-	        <div class="mypage acc">
-	        	<h5 class="text-secondary heading-5">QnA</h5>
-	        	<div class="content col-lg-6" id="content">
-	        		<table>
-	        			<colgroup>
-							<col style="width:160px;">
-							<col style="width:100px;">
-							<col style="width:auto;">
-							<col style="width:70px;">
-							<col style="width:150px;">
-							<col style="width:160px;">
-	        			</colgroup>
-	        			<thead>
-	        				<tr>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        				</tr>
-	        			</thead>
-	        		</table>
-	        	</div>
-	        </div>
-	        <div class="mypage acc">
-	        	<h5 class="text-secondary heading-5">공지사항</h5>
-	        	<div class="content col-lg-6" id="content">
-	        		<table>
-	        			<colgroup>
-							<col style="width:160px;">
-							<col style="width:100px;">
-							<col style="width:auto;">
-							<col style="width:70px;">
-							<col style="width:150px;">
-							<col style="width:160px;">
-	        			</colgroup>
-	        			<thead>
-	        				<tr>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        					<th scope="col" class=""></th>
-	        				</tr>
-	        			</thead>
 	        		</table>
 	        	</div>
 	        </div>

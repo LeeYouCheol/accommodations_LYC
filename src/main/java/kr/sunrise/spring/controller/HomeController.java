@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.sunrise.spring.pagination.Criteria;
 import kr.sunrise.spring.service.AccommodationsService;
 import kr.sunrise.spring.service.MemberService;
+import kr.sunrise.spring.vo.AccommodationsVO;
 import kr.sunrise.spring.vo.BusinessMemberVO;
 import kr.sunrise.spring.vo.MemberVO;
 
@@ -26,7 +28,7 @@ public class HomeController {
 	@Autowired
     MemberService memberService;
 	@Autowired
-	AccommodationsService accomodationsService;
+	AccommodationsService accommodationsService;
 	
 	//홈페이지메소드
     @RequestMapping(value="/")
@@ -138,8 +140,9 @@ public class HomeController {
   	}
   	//마이페이지
   	@RequestMapping(value = "/member/mypage", method = RequestMethod.GET)
-	public ModelAndView memberMypageGet(ModelAndView mv) {
-  		
+	public ModelAndView memberMypageGet(ModelAndView mv, Criteria cri) {
+  		ArrayList<AccommodationsVO> list = accommodationsService.getAccommodationsList(cri);
+  		mv.addObject("list", list);
 		mv.setViewName("/member/mypage");
 		return mv;
 	}

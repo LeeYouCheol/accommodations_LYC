@@ -10,7 +10,10 @@ public interface FileService {
 
 	public void insertFiles(MultipartFile[] files, String fi_ta_name, int fi_same_num);
 	
+	public FileVO insertFiles(MultipartFile file, String fi_ta_name, int fi_same_num);
+	
 	public void deleteFile(FileVO fileVo);
 	
 	public ArrayList<FileVO> selectFileList(String fi_ta_name, int fi_same_num);
+	
 }

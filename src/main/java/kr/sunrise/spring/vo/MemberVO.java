@@ -22,6 +22,6 @@ public class MemberVO {
 	private String me_code;
 	private int me_pos;
 	private int me_pos_count;
-	private int me_authority;
+	private int me_authority='1';
 	public boolean autoLogin;
 }

@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.sunrise.spring.pagination.Criteria;
 import kr.sunrise.spring.vo.AccommodationsVO;
-import kr.sunrise.spring.vo.FileVO;
+import kr.sunrise.spring.vo.FloorMapVO;
+import kr.sunrise.spring.vo.RoomVO;
 
 public interface AccommodationsDAO {
 
@@ -18,6 +19,15 @@ public interface AccommodationsDAO {
 
 	AccommodationsVO selectAccommodations(Integer ac_num);
 
-	ArrayList<FileVO> selectFileList(@Param("fi")String fi_ta_name, @Param("fi")Integer fi_same_num);
+	void insertFloorMap(FloorMapVO floorMap);
 
+	AccommodationsVO selectAccommodationsName(String ac_name);
+
+	void insertRoom(RoomVO room);
+
+	void insertSpec(RoomVO room);
+
+	ArrayList<FloorMapVO> selectMapList(@Param("ac_num")Integer ac_num);
+
+	ArrayList<RoomVO> selectRoomList(Integer ac_num);
 }

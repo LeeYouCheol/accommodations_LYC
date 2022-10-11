@@ -129,7 +129,7 @@
 						<option value="016" >016</option>
 					</select>
 					<input type="text" class="form-control col-4" id="me_phone2" name="me_phone2">
-					<input type="hidden" name="me_phone">
+					<input type=text" name="me_phone">
             	</div>
             </div>
 			<div class="form-group">

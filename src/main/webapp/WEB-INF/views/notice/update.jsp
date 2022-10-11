@@ -32,13 +32,6 @@ th{
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
-  <div class="lines-wrap">
-    <div class="lines-inner">
-      <div class="lines"></div>
-    </div>
-  </div>
-  <!-- END lines -->
-
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">
 		<div class="site-mobile-menu-close">
@@ -52,12 +45,12 @@ th{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A 수정</h2>
+				<h2 class="text-secondary heading-2">공지사항 수정</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-9 bg-white p-5">
-				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/qna/question/update"></c:url>" method="post" enctype="multipart/form-data">
+				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" method="post" enctype="multipart/form-data">
 					<table>
 						<colgroup>
 							<col style="width:10%">
@@ -67,25 +60,21 @@ th{
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">문의유형</th>
-								<td>
-									<input class="form-control" type="text" value="${question.qu_type}" readonly>
-								</td>
-								<th scope="row">작성자</th>
-								<td>
-									<input class="form-control" type="text"value="${question.qu_me_id}" readonly>
+								<th scope="row">제목</th>
+								<td colspan="6">
+									<input class="form-control col-14" type="text" name="no_title" id="no_title" value="${notice.no_title}">
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">제목</th>
-								<td colspan="6">
-									<input class="form-control col-14" type="text" name="qu_title" id="qu_title" value="${question.qu_title}">
+								<th scope="row">작성자</th>
+								<td>
+									<input class="form-control" type="text"value="${notice.no_me_id}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content">${question.qu_content}</textarea>
+									<textarea style="width:700px; height:150px;" name="no_content" id="no_content">${notice.no_content}</textarea>
 								</td>
 							</tr>
 							<tr>
@@ -104,17 +93,9 @@ th{
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<th>비밀글</th>
-								<td>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" <c:if test="${question.qu_secret == '1'}">checked</c:if>>비밀글을 원하면 체크 해주세요.
-									</div>
-								</td>
-							</tr>
 						</tbody>
 					</table>
-					<button class="btn btn-primary float-right mt-4">QnA수정</button>
+					<button class="btn btn-primary float-right mt-4">수정</button>
 				</form>
 			</div>
 		</div>
@@ -128,22 +109,22 @@ th{
 </div>
 <script type="text/javascript">
 $(function(){
-	$('[name=qu_content]').summernote({
+	$('[name=no_content]').summernote({
     placeholder: '문의 내용을 입력하세요.',
     tabsize: 2,
     height: 400
   });
 	$('form').submit(function(){
-		let qu_title = $('[name=qu_title]').val();
-		if(qu_title == ''){
+		let no_title = $('[name=no_title]').val();
+		if(no_title == ''){
 			alert('제목을 입력하세요.');
-			$('[name=qu_title]').focus();
+			$('[name=no_title]').focus();
 			return false;
 		}
-		let qu_content = $('[name=qu_content]').val();
+		let qu_content = $('[name=no_content]').val();
 		if(qu_content == ''){
 			alert('내용을 입력하세요.');
-			$('[name=qu_content]').focus();
+			$('[name=no_content]').focus();
 			return false;
 		}
 	});

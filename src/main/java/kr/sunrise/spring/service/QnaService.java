@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.sunrise.spring.pagination.Criteria;
-import kr.sunrise.spring.vo.FileVO;
 import kr.sunrise.spring.vo.MemberVO;
 import kr.sunrise.spring.vo.QuestionVO;
 

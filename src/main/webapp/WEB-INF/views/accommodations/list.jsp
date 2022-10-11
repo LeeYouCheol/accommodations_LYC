@@ -87,18 +87,18 @@ thead{
 	        				</tr>
 	        			</thead>
 	        			<tbody>
-		        				<c:forEach items="${list}" var="accommodations">
-									<tr>
-										<td>
-											<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
-										</td>
-										<td>
-											<a href="<c:url value="/accommodations/select/${accommodations.ac_num}"></c:url>">${accommodations.ac_name}</a>
-										</td>
-										<td>${accommodations.ac_addr}</td>
-										<td>${accommodations.ac_representation}</td>
-									</tr>
-								</c:forEach>
+	        				<c:forEach items="${list}" var="accommodations">
+								<tr>
+									<td>
+										<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
+									</td>
+									<td>
+										<a href="<c:url value="/accommodations/select/${accommodations.ac_num}"></c:url>">${accommodations.ac_name}</a>
+									</td>
+									<td>${accommodations.ac_addr}</td>
+									<td>${accommodations.ac_representation}</td>
+								</tr>
+							</c:forEach>
 	        			</tbody>
 	        		</table>
 	        	</div>

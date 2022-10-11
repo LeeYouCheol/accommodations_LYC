@@ -15,10 +15,10 @@ public class QuestionVO {
 	private String qu_where;
 	private String qu_content;
 	private String qu_secret = "0";
-	private int qu_ori_num;
 	private String qu_type;
+	private int qu_ori_num;
 	
-	public String getqu_date_str() {
+	public String getQu_date_str() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		return format.format(qu_date);
 	}

@@ -23,7 +23,7 @@
 	border-bottom: 1px solid gray;
 }
 </style>
-<title>QnA</title>
+<title>공지사항</title>
 </head>
 <body>
   <div class="lines-wrap">
@@ -46,7 +46,7 @@
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A</h2>
+				<h2 class="text-secondary heading-2">공지사항</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
@@ -55,61 +55,48 @@
 					<thead class="head">
 						<tr>
 							<th width="80">번호</th>
-							<th width="80">유형</th>
 							<th width="500">제목</th>
 							<th width="100">작성자</th>
 							<th width="100">작성일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${list}" var="question">
-							<c:if test="${question.qu_where == 'moa'}">
+						<c:forEach items="${list}" var="notice">
+							<c:if test="${notice.no_where == 'moa'}">
 								<tr>
-									<td>${question.qu_num}</td>
+									<td>${notice.no_num}</td>
 									<td>
-										<c:if test="${question.qu_type == 'signup'}">
-											회원가입
-										</c:if>
-										<c:if test="${question.qu_type == 'payment'}">
-											결제
-										</c:if>
-										<c:if test="${question.qu_type == 'accomodation'}">
-											고시원
-										</c:if>
-										<c:if test="${question.qu_type == 'business'}">
-											사업자
-										</c:if>
+										<a href="<c:url value="/notice/select/${notice.no_num}"></c:url>">${notice.no_title}</a>
 									</td>
-									<td>
-										<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
-									</td>
-									<td>${question.qu_me_id}</td>
-									<td>${question.qu_date_str}</td>
+									<td>${notice.no_me_id}</td>
+									<td>${notice.no_date_str}</td>
 								</tr>
 							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
-				<a href="<c:url value="/qna/question/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
+				<c:if test="${user.me_authority == '10'}">
+					<a href="<c:url value="/notice/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">공지사항등록</a>
+				</c:if>
 				<ul class="pagination justify-content-center">
 				  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-				  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+				  		<a class="page-link" href="<c:url value="/notice/list?page=1&search=${pm.cri.search}&no_where=${no_where}"></c:url>">처음</a>
 				  	</li>
 				  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-				  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+				  		<a class="page-link" href="<c:url value="/notice/list?page=${pm.startPage-1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">이전</a>
 				  	</li>
 				  	
 				  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
 				    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-				    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+				    		<a class="page-link" href="<c:url value="/notice/list?page=${i}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">${i}</a>
 				    	</li>
 				    </c:forEach>
 				
 				    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-				    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+				    	<a class="page-link " href="<c:url value="/notice/list?page=${pm.endPage+1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">다음</a>
 				    </li>
 				    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-				    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+				    	<a class="page-link" href="<c:url value="/notice/list?page=${pm.finalPage}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">마지막</a>
 				    </li>
 				</ul>
 				<form>
@@ -118,7 +105,7 @@
 						<div class="input-group-append">
 							<button class="btn btn-primary" type="submit">검색</button>
 						</div>
-						<input type="hidden" name="qu_where" value="${qu_where}">
+						<input type="hidden" name="no_where" value="${no_where}">
 					</div>
 				</form>
 			</div>

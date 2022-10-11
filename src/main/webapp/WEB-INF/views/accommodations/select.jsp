@@ -16,8 +16,49 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script>
 
-<title>QnA</title>
+<title></title>
 <style>
+#slide{
+	style="width:1392px; height:400px;"
+}
+#title{
+	color: #fff; font-weight: bold;
+}
+.container{
+	margin-left: 0; margin-right: 0;
+}
+#menu-box{
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%); color: #202020; background-color:#fff;
+}
+#inner-menu{
+	width: 1130px; padding: 0 30px; margin: 0 auto;
+}
+#group-menu{
+	overflow: hidden; padding: 11px 270px 11px 0;
+}
+#nav{
+	list-style: none; font-size:15px; line-height:30px; font-weight:700;
+	colcor: #000; letter-spacing: -.3px;
+}
+#nav::after{
+	display: block; content: ''; clear: both;
+}
+.nav-item{
+	float:left;
+}
+.nav-item+.nav-item{
+	margin-left: 10px;
+}
+#name{
+	display: block; text-decoration: none; color:#000;
+}
+.mySlides {display:none;}
+.head{
+	color: black; font-weight:bold;
+}
+.head{
+	border-bottom: 1px solid gray;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -36,334 +77,271 @@
 	</div>
 	<div class="site-mobile-menu-body"></div>
 </div>
-
-<div class="untree_co-section">
-    <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-lg-6">
-          <h2 class="text-secondary heading-2">About us</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="untree_co-section bg-light">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-4">
-          <ul class="list-unstyled list-icons">
-
-            <li>
-              <a href="#" class="d-flex align-items-center">
-                <span class="icon-wrap">
-                  <span class="flaticon-bed"></span>
-                </span>
-                <span class="text">
-                 Right at the coast of the Semantics Vokalia and Consonantia
-               </span>
-             </a>
-           </li>
-
-           <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-building"></span>
-              </span>
-              <span class="text">
-                And if she hasn’t been rewritten then Vokalia and Consonantia
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-garage"></span>
-              </span>
-              <span class="text">
-                Separated they live in Bookmarksgrove right at  large
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-map"></span>
-              </span>
-              <span class="text">
-                And if she hasn’t been rewritten then large language ocean.
-              </span>
-            </a>
-          </li>
-
-
-
-        </ul>
-      </div> <!-- /.col-lg-4 -->
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <img src="images/img_portrait_1.jpg" alt="Image" class="img-fluid rounded">
-      </div> <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <h3 class="subtitle mb-4 text-primary">Why Us</h3>
-        <h2 class="mb-4 margin-left-offset heading-2 text-black font-weight-bold">You're in good company</h2>
-        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-      </div> <!-- /.col-lg-4 -->
-    </div> <!-- /.row -->
-  </div> <!-- /.container -->
+<!-- 사진 슬라이드 -->
+<div class="untree_co_slider-wrap" data-aos="fade-up">
+	<div class="untree_co_slider">
+		<c:forEach items="${fileList }" var="file">
+			<c:if test="${file.fi_ori_name.indexOf('안내도') < 0}">
+			<div class="item">
+				<img src="<c:url value="/file${file.fi_name }"></c:url>" alt="Image" class="img-fluid" id="slide">
+	
+				<div class="property-contents">
+					<h2 id="title">${file.fi_ori_name}</h2>
+				</div>
+			</div>
+			</c:if>
+		</c:forEach>
+	</div>
 </div>
 
-<div class="untree_co-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="row">
-          <div class="col-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="service">
-              <div class="icon-wrap"><span class="flaticon-building"></span></div>
-              <div>
-                <h3><a href="#">The Word Mountains</a></h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="service">
-              <div class="icon-wrap"><span class="flaticon-bathtub"></span></div>
-              <div>
-                <h3><a href="#">The Word Mountains</a></h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="service">
-              <div class="icon-wrap"><span class="flaticon-bed"></span></div>
-              <div>
-                <h3><a href="#">The Word Mountains</a></h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="service">
-              <div class="icon-wrap"><span class="flaticon-house-size"></span></div>
-              <div>
-                <h3><a href="#">The Word Mountains</a></h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-              </div>
-            </div>
-          </div>     
-        </div>
-      </div>
-
-    </div>
-  </div> <!-- /.container -->
-</div> <!-- /.untree_co-section -->
-
-<div class="untree_co-section">
-  <div class="container"> 
-    <div class="row gutter-v3">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <a href="#" class="feature-v2 d-flex">
-          <div class="icon-wrap">
-            <span class="icon-support"></span>
-          </div>
-          <div class="text">
-            <h3 class="heading">Ask our Customer Service</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          </div>
-        </a> <!-- /.feature-v2 -->
-      </div> <!-- /.col-lg-6 -->
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <a href="#" class="feature-v2 d-flex">
-          <div class="icon-wrap">
-            <span class="icon-chat_bubble_outline"></span>
-          </div>
-          <div class="text">
-            <h3 class="heading">Visit our Blog</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          </div>
-        </a> <!-- /.feature-v2 -->
-      </div> <!-- /.col-lg-6 -->
-    </div> <!-- /.row -->
-  </div> <!-- /.container -->
+<!-- 중앙 메뉴 -->
+<div>
+	<div id="menu-box">
+		<div id="inner-menu">
+			<div id="group-menu" >
+				<ul id="nav nav-pills" class="nav">
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" style="display:block;" href="#main/${accommodations.ac_num}">${accommodations.ac_name}</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" id="name" style="display:block;" href="#room">객실</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" id="name" style="display:block;" href="#notice">공지사항</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" id="name" style="display:block;" href="#qna">Q&A</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" id="name" style="display:block;" href="#review">리뷰</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="pill" id="name" style="display:block;" href="#root">오시는길</a>
+					</li>
+				</ul>
+			</div>
+		</div>	
+	</div>
 </div>
-
-<div class="untree_co-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-        <div class="team">
-          <img src="images/person_1.jpg" alt="Image" class="img-fluid">
-          <h3>James Watson</h3>
-          <p>Co-Founder &amp; CEO</p>
-        </div> <!-- /.team -->
-      </div> <!-- /.col-sm-6 col-md-6 col-lg-3 -->
-
-      <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-        <div class="team">
-          <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-          <h3>Carl Anderson</h3>
-          <p>Co-Founder &amp; CEO</p>
-        </div> <!-- /.team -->
-      </div> <!-- /.col-sm-6 col-md-6 col-lg-3 -->
-
-      <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-        <div class="team">
-          <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-          <h3>Michelle Allison</h3>
-          <p>Co-Founder &amp; CEO</p>
-        </div> <!-- /.team -->
-      </div> <!-- /.col-sm-6 col-md-6 col-lg-3 -->
-
-      <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-        <div class="team">
-          <img src="images/person_4.jpg" alt="Image" class="img-fluid">
-          <h3>Michelle Allison</h3>
-          <p>Co-Founder &amp; CEO</p>
-        </div> <!-- /.team -->
-      </div> <!-- /.col-sm-6 col-md-6 col-lg-3 -->
-
-    </div>
-  </div> <!-- /.container -->
-</div> <!-- /.untree_co-section -->
-
-
-<div class="untree_co-section bg-light">
-  <div class="container">
-    <div class="row justify-content-center mb-5 text-center">
-      <div class="col-md-7">
-        <h2 class="text-secondary heading-2">Testimonials</h2>
-      </div> <!-- /.col-md-7 -->
-    </div> <!-- /.row -->
-    <div class="row align-items-stretch">
-      <div class="col-md-6 col-lg-4">
-        <div class="untree_co-testimonial h-100">
-          <span class="quote">&ldquo;</span>
-          <blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque animi omnis quas voluptate aliquam dolore facere, exercitationem, quos nihil iusto.</p>
-          </blockquote>
-          <div class="author d-flex align-items-center">
-            <div class="author-picture mr-3"><img src="images/person_1.jpg" alt="Image" class="img-fluid"></div>
-            <div class="author-name">
-              <strong class="d-block">Mike Smith</strong>
-              <span>CTO &mdash; Stack, Inc.</span>
-            </div>
-          </div>
-        </div> <!-- /.untree_co-testimonial -->
-      </div> <!-- /.col-lg-4 -->
-      <div class="col-md-6 col-lg-4">
-        <div class="untree_co-testimonial h-100">
-          <span class="quote">&ldquo;</span>
-          <blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque animi omnis quas voluptate aliquam dolore facere, exercitationem, quos nihil iusto.</p>
-          </blockquote>
-          <div class="author d-flex align-items-center">
-            <div class="author-picture mr-3"><img src="images/person_2.jpg" alt="Image" class="img-fluid"></div>
-            <div class="author-name">
-              <strong class="d-block">Mike Smith</strong>
-              <span>CTO &mdash; Stack, Inc.</span>
-            </div>
-          </div>
-        </div> <!-- /.untree_co-testimonial -->
-      </div> <!-- /.col-lg-4 -->
-      <div class="col-md-6 col-lg-4">
-        <div class="untree_co-testimonial h-100">
-          <span class="quote">&ldquo;</span>
-          <blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque animi omnis quas voluptate aliquam dolore facere, exercitationem, quos nihil iusto.</p>
-          </blockquote>
-          <div class="author d-flex align-items-center">
-            <div class="author-picture mr-3"><img src="images/person_3.jpg" alt="Image" class="img-fluid"></div>
-            <div class="author-name">
-              <strong class="d-block">Mike Smith</strong>
-              <span>CTO &mdash; Stack, Inc.</span>
-            </div>
-          </div>
-        </div> <!-- /.untree_co-testimonial -->
-      </div> <!-- /.col-lg-4 -->
-    </div> <!-- /.row -->
-  </div> <!-- /.container -->  
-</div> <!-- /.untree_co-section -->
-
-
-<div class="site-footer">
-  <div class="inner first">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-lg-4">
-          <div class="widget">
-            <h3 class="heading">About Untree.co</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          </div>
-          <div class="widget">
-            <ul class="list-unstyled social">
-              <li><a href="#"><span class="icon-dribbble"></span></a></li>
-              <li><a href="#"><span class="icon-linkedin"></span></a></li>
-              <li><a href="#"><span class="icon-twitter"></span></a></li>
-              <li><a href="#"><span class="icon-instagram"></span></a></li>
-              <li><a href="#"><span class="icon-facebook"></span></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-2 pl-lg-5">
-          <div class="widget">
-            <h3 class="heading">Pages</h3>
-            <ul class="links list-unstyled">
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Buy</a></li>
-              <li><a href="#">Sell</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-2">
-          <div class="widget">
-            <h3 class="heading">Resources</h3>
-            <ul class="links list-unstyled">
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="widget">
-            <h3 class="heading">Contact</h3>
-            <ul class="list-unstyled quick-info links">
-              <li class="email"><a href="#">info@untree.co</a></li>
-              <li class="phone"><a href="#">+1 222 212 3819</a></li>
-              <li class="address"><a href="#">43 Raymouth Rd. Baltemoer, London 3910</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="inner dark">
-    <div class="container">
-      <div class="row text-center text-md-left">
-        <div class="col-md-6 mb-3 mb-md-0">
-          <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
-          </p>
-        </div>
-        <div class="col-md-6 text-md-right">
-          <a href="#" class="mx-2">Terms</a>
-          <a href="#" class="mx-2">Privacy</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- 중앙 메뉴에 따른 페이지 -->
+<div class="container">
+	<div class="row align-items-center">
+		<div class="tab-content">
+			<!-- 고시원 메인 소개글 -->
+			<div class="tab-pane container active" id="main">
+				<span>${accommodations.ac_content}</span>
+			</div>
+			<!-- 각 층에 따른 층별 안내도 -->
+			<div class="tab-pane container fade" id="room">
+				<div class="container" style="margin-top: 10px;">
+					<ul class="nav nav-tabs" role="tablist">
+						<c:forEach items="${mapList}" var="floor">
+							<li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" href="#floor${floor.fm_fi_num}">${floor.fm_floor}층</a>
+						    </li>
+		  				</c:forEach>
+					</ul>
+					<!-- 층 선택에따른 층별 안내도 출력 -->
+					<div class="tab-content">
+				  		<c:forEach items="${mapList}" var="floor">
+						    <div id="floor${floor.fm_fi_num}" class="container tab-pane">
+								<img style="width:900px;" src="<c:url value="/file${floor.fi_name}"></c:url>">
+						    </div>
+						    <!-- 층을 선택하면 층별안내도가 나오고 그 층에 맞는 객실을 출력 -->
+							<div class="container">
+								<!-- Nav pills -->
+								<ul class="nav nav-pills" role="tablist">
+									<c:forEach items="${roomList}" var="room">
+										<c:if test="${room.ro_floor == floor.fm_floor}">
+											<li class="nav-item">
+										    	<a class="nav-link" data-toggle="pill" href="#room${room.ro_num}">${room.ro_num}호</a>
+										    </li>
+										</c:if>
+								    </c:forEach>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div id="#room${room.ro_num}" class="container tab-pane active">
+								    	<img src="">
+								    </div>
+								</div>
+							</div>
+				    	</c:forEach>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane container fade" id="notice">
+				<div class="container">
+					<div class="row justify-content-center text-center mb-5">
+						<div class="col-lg-6 mt-3">
+							<h2 class="text-secondary heading-2">공지사항</h2>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 bg-white p-5">
+							<table class="notice">
+								<thead class="head">
+									<tr>
+										<th width="80">번호</th>
+										<th width="500">제목</th>
+										<th width="100">작성자</th>
+										<th width="100">작성일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${noticeList}" var="notice">
+										<c:if test="${notice.no_where == 'acc'}">
+											<tr>
+												<td>${notice.no_num}</td>
+												<td>
+													<a href="<c:url value="/notice/select/${notice.no_num}"></c:url>">${notice.no_title}</a>
+												</td>
+												<td>${notice.no_me_id}</td>
+												<td>${notice.no_date_str}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+							<c:if test="${user.me_authority == '2'}">
+								<a href="<c:url value="/notice/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">공지사항등록</a>
+							</c:if>
+							<ul class="pagination justify-content-center">
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/notice/list?page=1&search=${pm.cri.search}&no_where=${no_where}"></c:url>">처음</a>
+							  	</li>
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/notice/list?page=${pm.startPage-1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">이전</a>
+							  	</li>
+							  	
+							  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
+							    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+							    		<a class="page-link" href="<c:url value="/notice/list?page=${i}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">${i}</a>
+							    	</li>
+							    </c:forEach>
+							
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link " href="<c:url value="/notice/list?page=${pm.endPage+1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">다음</a>
+							    </li>
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link" href="<c:url value="/notice/list?page=${pm.finalPage}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">마지막</a>
+							    </li>
+							</ul>
+							<form>
+								<div class="input-group mb-3">
+									<input class="form-control col-14" type="text" placeholder="제목으로 검색하세요." name="search" value="${pm.cri.search}">
+									<div class="input-group-append">
+										<button class="btn btn-primary" type="submit">검색</button>
+									</div>
+									<input type="hidden" name="no_where" value="${no_where}">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane container fade" id="qna">
+				<div class="container">
+					<div class="row justify-content-center text-center mb-5">
+						<div class="col-lg-6 mt-3">
+							<h2 class="text-secondary heading-2">Q & A</h2>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 bg-white p-5">
+							<table class="notice">
+								<thead class="head">
+									<tr>
+										<th width="80">번호</th>
+										<th width="80">유형</th>
+										<th width="500">제목</th>
+										<th width="100">작성자</th>
+										<th width="100">작성일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${qnaList}" var="question">
+										<c:if test="${question.qu_where == 'acc'}">
+											<tr>
+												<td>${question.qu_num}</td>
+												<td>
+													<c:if test="${question.qu_type == 'signup'}">
+														회원가입
+													</c:if>
+													<c:if test="${question.qu_type == 'payment'}">
+														결제
+													</c:if>
+													<c:if test="${question.qu_type == 'accomodation'}">
+														고시원
+													</c:if>
+													<c:if test="${question.qu_type == 'business'}">
+														사업자
+													</c:if>
+												</td>
+												<td>
+													<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
+												</td>
+												<td>${question.qu_me_id}</td>
+												<td>${question.qu_date_str}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+							<a href="<c:url value="/qna/question/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
+							<ul class="pagination justify-content-center">
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+							  	</li>
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+							  	</li>
+							  	
+							  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
+							    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+							    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+							    	</li>
+							    </c:forEach>
+							
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+							    </li>
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+							    </li>
+							</ul>
+							<form>
+								<div class="input-group mb-3">
+									<input class="form-control col-14" type="text" placeholder="제목으로 검색하세요." name="search" value="${pm.cri.search}">
+									<div class="input-group-append">
+										<button class="btn btn-primary" type="submit">검색</button>
+									</div>
+									<input type="hidden" name="qu_where" value="${qu_where}">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane container fade" id="review">
+			
+			</div>
+			<div class="tab-pane container fade" id="root">
+				
+			</div>
+		</div>
+	</div>
 </div>
 <div id="overlayer"></div>
 <div class="loader">
-	<div class="spinner-border" role="status">
+	<div class="spinner-border" role="status">	
 		<span class="sr-only">Loading...</span>
 	</div>
 </div>
+<script>
+$(function(){
+	$('#room .nav-link').first().click();
+})
+</script>
 </body>
 </html>

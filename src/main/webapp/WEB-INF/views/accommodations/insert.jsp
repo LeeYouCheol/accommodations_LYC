@@ -139,14 +139,12 @@ th{
 							</div>
 							<div class="form-group">
 								<label>층별안내도:</label>
-								<div class="row">
-									<input type="text" class="form-control file col-3" name="floor">
-									<input type="file" class="form-control file col-9" name="floorImgs">
+								<div class="box-floor">
+									<div class="row">
+										<input type="text" class="form-control file col-3" name="floor">
+										<input type="file" class="form-control file col-9" name="floorImgs">
+									</div>
 								</div>
-								
-								<input type="file" class="form-control file" name="floorImgs">
-								<input type="file" class="form-control file" name="floorImgs">
-								<input type="file" class="form-control file" name="floorImgs">
 							</div>
 							<div class="form-group">
 								<label>상세페이지에 들어갈 고시원사진:</label>
@@ -175,6 +173,25 @@ th{
 </div>
 <script type="text/javascript">
 $(function(){
+	$('#ac_floor').change(function(){
+		let floor = $(this).val();
+		
+		try{
+			floor = new Number(floor);
+		}catch(e){
+			alert('정수를 입력하세요.');
+			return;
+		}
+		let str = '';
+		for(i = 0; i<floor; i++){
+			str += '<div class="row">'
+			str +=	'<input type="text" class="form-control file col-3" name="floor">'
+			str +=	'<input type="file" class="form-control file col-9" name="floorImgs">'
+			str += '</div>'
+		}
+		$('.box-floor').html(str)
+	})
+	
 	$("form").validate({
     	rules: {
         	ac_name: {

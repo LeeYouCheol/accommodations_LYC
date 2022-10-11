@@ -29,16 +29,18 @@
 table{
 	width: 100%; border: none; border-spacing: 0; border-collapse: collapse;
 }
-th{
-	color: #353535; padding: 15px 0; vertical-align: center;
+#head-item{
+	color: #353535; padding: 15px 0; text-align: center; font-size: 18px;
 }
-thead{
-	border-bottom: 1px solid #e1e1e1; vertical-align: middle;
+#head{
+	border-bottom: 1px solid #e1e1e1;
 }
-.title{
-	font-size:13px;
+#body-item{
+	 text-align: center; color: black;
 }
-
+.btn{
+	margin-left:3px; margin-righ:3px;
+}
 </style>
 <title>마이페이지</title>
 </head>
@@ -67,32 +69,53 @@ thead{
 							<col style="width:auto;">
 							<col style="width:150px;">
 							<col style="width:160px;">
-							<col style="width:70px;">
-							<col style="width:100px;">
+							<col style="width:auto;">
+							<col style="width:auto;">
 	        			</colgroup>
-	        			<thead>
+	        			<thead id="head">
 	        				<tr>
-	        					<th scope="col" class="ac_num">고시원번호</th>
-	        					<th scope="col" class="thumb">이미지</th>
-	        					<th scope="col" class="name">이름</th>
-	        					<th scope="col" class="management">신청여부</th>
-	        					<th scope="col" class="statement">관리</th>
+	        					<th id="head-item" scope="col" class="num">고시원번호</th>
+	        					<th id="head-item" scope="col" class="thumb">이미지</th>
+	        					<th id="head-item" scope="col" class="name">이름</th>
+	        					<th id="head-item" scope="col" class="management">신청여부</th>
+	        					<th id="head-item" scope="col" class="statement">관리</th>
 	        				</tr>
 	        			</thead>
 	        			<tbody>
-	        				<c:if test="${user.me_id == accommodations.ac_me_id}">
-		        				<c:forEach items="${list}" var="accommodations">
-									<tr>
-										<td>${accommodations.ac_num}</td>
-										<td>${accommodations.ac_thumb}</td>
-										<td>${accommodations.ac_name}</td>
-										<td>${accommodations.ac_permit}</td>
-										<td>
-											<button>버튼</button>
-										</td>
-									</tr>
-								</c:forEach>
-							</c:if>
+	        				<c:forEach items="${list}" var="accommodations">
+								<tr>
+									<td id="body-item">${accommodations.ac_num}</td>
+									<td id="body-item">
+										<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
+									</td>
+									<td id="body-item">${accommodations.ac_name}</td>
+									<td id="body-item">
+										<c:if test="${accommodations.ac_permit == 'S'}">
+											대기
+										</c:if>
+										<c:if test="${accommodations.ac_permit == 'Y'}">
+											등록
+										</c:if>
+										<c:if test="${accommodations.ac_permit == 'N'}">
+											취소
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${accommodations.ac_permit == 'S'}">
+											<span style="color: black;">등록이 완료되면 이용가능합니다.</span>
+										</c:if>
+										<c:if test="${accommodations.ac_permit == 'Y'}">
+											<a class="btn btn-outline-light text-dark" href="<c:url value="/accommodations/select/${accommodations.ac_num}"></c:url>">고시원관리</a>
+											<a class="btn btn-outline-primary" href="<c:url value="/room/insert?ac_num=${accommodations.ac_num}"></c:url>">객실등록</a>
+											<a class="btn btn-outline-success mr-7" href="<c:url value="/room/update"></c:url>">객실수정</a>
+											<a class="btn btn-outline-secondary" href="<c:url value="/room/delete"></c:url>">객실삭제</a>
+										</c:if>
+										<c:if test="${accommodations.ac_permit == 'N'}">
+											등록이 취소되어 이용할 수 없습니다. 문의바랍니다.
+										</c:if>
+									</td>
+								</tr>
+							</c:forEach>
 	        			</tbody>
 	        		</table>
 	        	</div>

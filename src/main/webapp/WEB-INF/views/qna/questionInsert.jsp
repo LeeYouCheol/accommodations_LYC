@@ -72,7 +72,7 @@ th{
 									<select class="form-control" name="qu_where" id="qu_where">
 										<option value="0">문의위치</option>
 										<option value="moa">사이트</option>
-										<option value="accmodation">고시원</option>
+										<option value="acc">고시원</option>
 									</select>
 								</td>
 								<th scope="row">문의유형</th>
@@ -126,12 +126,6 @@ th{
 				</form>
 			</div>
 		</div>
-	</div>
-</div>
-<div id="overlayer"></div>
-<div class="loader">
-	<div class="spinner-border" role="status">
-		<span class="sr-only">Loading...</span>
 	</div>
 </div>
 <script type="text/javascript">

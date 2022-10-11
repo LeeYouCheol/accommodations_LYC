@@ -34,7 +34,7 @@
 	          <li class="has-children">
 	            <a href="#">고객센터</a>
 	            <ul class="dropdown">
-	              <li><a href="<c:url value="/qna/notice/list"></c:url>">공지사항</a></li>
+	              <li><a href="<c:url value="/notice/list"></c:url>">공지사항</a></li>
 	              <li><a href="<c:url value="/qna/question/list"></c:url>">QnA</a></li>
 	              <li class="has-children">
 	                <a href="#">QnA</a>
