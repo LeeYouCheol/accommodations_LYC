@@ -44,7 +44,6 @@ table{
 </style>
 <title>마이페이지</title>
 </head>
-
 <body>
 <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -65,61 +64,61 @@ table{
       			<h5 class="text-secondary heading-5">내고시원</h5>
 	        	<div class="content" id="content">
 	        		<table border="1">
-						<colgroup>
-							<col style="width:auto;">
-							<col style="width:150px;">
-							<col style="width:160px;">
-							<col style="width:auto;">
-							<col style="width:auto;">
+								<colgroup>
+									<col style="width:auto;">
+									<col style="width:auto;">
+									<col style="width:auto;">
+									<col style="width:auto;">
+									<col style="width:auto;">
 	        			</colgroup>
 	        			<thead id="head">
 	        				<tr>
-	        					<th id="head-item" scope="col" class="num">고시원번호</th>
-	        					<th id="head-item" scope="col" class="thumb">이미지</th>
-	        					<th id="head-item" scope="col" class="name">이름</th>
-	        					<th id="head-item" scope="col" class="management">신청여부</th>
+	        					<th id="head-item" scope="col" class="type">객실코드</th>
+	        					<th id="head-item" scope="col" class="type">객실타입</th>
+	        					<th id="head-item" scope="col" class="num">객실호수</th>
+	        					<th id="head-item" scope="col" class="price">객실가격</th>
+	        					<th id="head-item" scope="col" class="premium">프리미엄</th>
+	        					<th id="head-item" scope="col" class="state">이용여부</th>
 	        					<th id="head-item" scope="col" class="statement">관리</th>
 	        				</tr>
 	        			</thead>
 	        			<tbody>
-	        				<c:forEach items="${list}" var="accommodations">
-								<tr>
-									<td id="body-item">${accommodations.ac_num}</td>
-									<td id="body-item">
-										<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
-									</td>
-									<td id="body-item">${accommodations.ac_name}</td>
-									<td id="body-item">
-										<c:if test="${accommodations.ac_permit == 'S'}">
-											대기
-										</c:if>
-										<c:if test="${accommodations.ac_permit == 'Y'}">
-											등록
-										</c:if>
-										<c:if test="${accommodations.ac_permit == 'N'}">
-											취소
-										</c:if>
-									</td>
-									<td>
-										<c:if test="${accommodations.ac_permit == 'S'}">
-											<span style="color: black;">등록이 완료되면 이용가능합니다.</span>
-										</c:if>
-										<c:if test="${accommodations.ac_permit == 'Y'}">
-											<a class="btn btn-outline-light text-dark" href="<c:url value="/accommodations/select/${accommodations.ac_num}"></c:url>">고시원관리</a>
-											<a class="btn btn-outline-primary" href="<c:url value="/room/insert?ac_num=${accommodations.ac_num}"></c:url>">객실등록</a>
-											<a class="btn btn-outline-success mr-7" href="<c:url value="/room/update"></c:url>">객실수정</a>
-											<a class="btn btn-outline-secondary" href="<c:url value="/room/delete"></c:url>">객실삭제</a>
-										</c:if>
-										<c:if test="${accommodations.ac_permit == 'N'}">
-											등록이 취소되어 이용할 수 없습니다. 문의바랍니다.
-										</c:if>
-									</td>
-								</tr>
-							</c:forEach>
-	        			</tbody>
-	        		</table>
-	        	</div>
-	        </div>
+	        				<c:forEach items="${roomList}" var="room">
+									<tr>
+										<td id="body-item">${room.ro_code}</td>
+										<td id="body-item">${room.ro_type}</td>
+										<td id="body-item">${room.ro_num}</td>
+										<td id="body-item">${room.ro_price}</td>
+										<td id="body-item">
+											<c:if test="${room.ro_premium == 'P'}">
+												<span style="color: black;">프리미엄</span>
+											</c:if>
+											<c:if test="${room.ro_premium == 'N'}">
+												<span style="color: black;">일반</span>
+											</c:if>
+										</td>
+										<td>
+											<c:if test="${room.ro_state == 'A'}">
+												<span style="color: black;">예약가능</span>
+											</c:if>
+											<c:if test="${room.ro_state == 'N'}">
+												<span style="color: black;">예약불가</span>
+											</c:if>
+											<c:if test="${room.ro_state == 'F'}">
+												<span style="color: black;">수리중</span>
+											</c:if>
+										</td>
+										<td>
+											<a class="btn btn-outline-light text-dark" href="<c:url value="/room/select/${room.ro_code}"></c:url>">상세</a>
+											<a class="btn btn-outline-primary" href="<c:url value="/room/update/${room.ro_code}"></c:url>">수정</a>
+											<a class="btn btn-outline-danger" href="<c:url value="/room/delete/${room.ro_code}"></c:url>">삭제</a>
+										</td>
+									</tr>
+								</c:forEach>
+        			</tbody>
+        		</table>
+        	</div>
+        </div>
 		</div>
 	</div>
 </div>

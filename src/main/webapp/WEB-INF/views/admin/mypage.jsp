@@ -27,7 +27,7 @@
 	border: 1px solid #dfdfdf; border-radius: 4px; overflow: hidden; background-color: #fff;
 }
 table{
-	width: 100%; border: none; border-spacing: 0; border-collapse: collapse;
+	width: 100%; border: none; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px;
 }
 #head-item{
 	color: #353535; padding: 15px 0; text-align: center; font-size: 18px;
@@ -44,7 +44,6 @@ table{
 </style>
 <title>마이페이지</title>
 </head>
-
 <body>
 <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -62,63 +61,96 @@ table{
 		</div>
       	<div class="row justify-content-center" id="box">
       		<div class="mypage accomodations">
-      			<h5 class="text-secondary heading-5">고시원관리</h5>
-	        	<div class="content" id="content">
-	        		<table border="1">
-						<colgroup>
-							<col style="width:auto;">
-							<col style="width:150px;">
-							<col style="width:160px;">
-							<col style="width:auto;">
-							<col style="width:auto;">
-	        			</colgroup>
-	        			<thead id="head">
-	        				<tr>
-	        					<th id="head-item" scope="col" class="num">고시원번호</th>
-	        					<th id="head-item" scope="col" class="thumb">이미지</th>
-	        					<th id="head-item" scope="col" class="name">이름</th>
-	        					<th id="head-item" scope="col" class="management">신청여부</th>
-	        					<th id="head-item" scope="col" class="statement">관리</th>
-	        				</tr>
-	        			</thead>
-	        			<tbody>
-
-		        				<c:forEach items="${list}" var="accommodations">
-									<tr>
-										<td id="body-item">${accommodations.ac_num}</td>
-										<td id="body-item">
-											<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
-										</td>
-										<td id="body-item">${accommodations.ac_name}</td>
-										<td id="body-item">
-											<c:if test="${accommodations.ac_permit == 'S'}">
-												대기
-											</c:if>
-											<c:if test="${accommodations.ac_permit == 'Y'}">
-												등록
-											</c:if>
-											<c:if test="${accommodations.ac_permit == 'N'}">
-												취소
-											</c:if>
-										</td>
-										<td>
-											<c:if test="${accommodations.ac_permit !='Y'}">
-												<a class="btn btn-outline-light text-dark" href="<c:url value="/admin/select/${accommodations.ac_num}"></c:url>">상세내용</a>
-											</c:if>
-											<c:if test="${accommodations.ac_permit !='Y'}">
-												<a class="btn btn-outline-primary" href="<c:url value=""></c:url>">등록수락</a>
-											</c:if>
-											<a class="btn btn-outline-dark" href="<c:url value=""></c:url>">등록보류</a>
-											<c:if test="${accommodations.ac_permit !='S'}">
-												<a class="btn btn-outline-danger" href="<c:url value=""></c:url>">등록취소</a>
-											</c:if>
-										</td>
-									</tr>
-								</c:forEach>
-							
-	        			</tbody>
-	        		</table>
-	        	</div>
+      			<form>
+	      			<h5 class="text-secondary heading-5">사업자회원관리</h5>
+	      				<div class="content" id="content">
+	      					<table border="1">
+									<colgroup>
+										<col style="width:100px;">
+										<col style="width:200px;">
+										<col style="width:400px;">
+		        			</colgroup>
+		        			<thead id="head">
+		        				<tr>
+		        					<th id="head-item" scope="col" class="id">아이디</th>
+		        					<th id="head-item" scope="col" class="bm">사업자등록번호</th>
+		        					<th id="head-item" scope="col" class="statement">관리</th>
+		        				</tr>
+		        			</thead>
+		        			<tbody>
+										<tr>
+											<c:forEach items="${bmList}" var="bm">
+												<td id="body-item">${bm.bm_me_id}</td>
+												<td id="body-item">${bm.bm_number}<td>
+												<td id="body-item">
+														<c:if test="${bm.bm_pos == 0}">
+															<a class="btn btn-outline-primary" href="<c:url value="/member/update"></c:url>">가입승인</a>
+														</c:if>
+														<c:if test="${bm.bm_pos == 1}">
+															<a class="btn btn-outline-primary" href="<c:url value="/member/update"></c:url>">가입취소</a>
+														</c:if>
+												</td>
+											</c:forEach>
+										</tr>
+		        			</tbody>
+		        		</table>
+	      			</div>
+	      			<h5 class="text-secondary heading-5">고시원관리</h5>
+		        	<div class="content" id="content">
+		        		<table border="1">
+									<colgroup>
+										<col style="width:auto;">
+										<col style="width:150px;">
+										<col style="width:160px;">
+										<col style="width:auto;">
+										<col style="width:auto;">
+		        			</colgroup>
+		        			<thead id="head">
+		        				<tr>
+		        					<th id="head-item" scope="col" class="num">고시원번호</th>
+		        					<th id="head-item" scope="col" class="thumb">이미지</th>
+		        					<th id="head-item" scope="col" class="name">이름</th>
+		        					<th id="head-item" scope="col" class="management">신청여부</th>
+		        					<th id="head-item" scope="col" class="statement">관리</th>
+		        				</tr>
+		        			</thead>
+		        			<tbody>
+			        			<c:forEach items="${list}" var="accommodations">
+										<tr>
+											<td id="body-item">${accommodations.ac_num}</td>
+											<td id="body-item">
+												<img src="<c:url value="/file${accommodations.ac_thumb}"></c:url>" width="150" height="150">
+											</td>
+											<td id="body-item">${accommodations.ac_name}</td>
+											<td id="body-item">
+												<c:if test="${accommodations.ac_permit == 'S'}">
+													대기
+												</c:if>
+												<c:if test="${accommodations.ac_permit == 'Y'}">
+													등록
+												</c:if>
+												<c:if test="${accommodations.ac_permit == 'N'}">
+													취소
+												</c:if>
+											</td>
+											<td>
+												<c:if test="${accommodations.ac_permit !='Y'}">
+													<a class="btn btn-outline-light text-dark" href="<c:url value="/admin/select/${accommodations.ac_num}"></c:url>">상세내용</a>
+												</c:if>
+												<c:if test="${accommodations.ac_permit !='Y'}">
+													<a class="btn btn-outline-primary" href="<c:url value=""></c:url>">등록수락</a>
+												</c:if>
+												<a class="btn btn-outline-dark" href="<c:url value=""></c:url>">등록보류</a>
+												<c:if test="${accommodations.ac_permit !='S'}">
+													<a class="btn btn-outline-danger" href="<c:url value=""></c:url>">등록취소</a>
+												</c:if>
+											</td>
+										</tr>
+										</c:forEach>				
+		        			</tbody>
+		        		</table>
+		        	</div>
+	        	</form>
 	        </div>
 		</div>
 	</div>

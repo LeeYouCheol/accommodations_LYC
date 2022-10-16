@@ -41,4 +41,33 @@
 	<select id="selectRoomList" resultType="kr.sunrise.spring.vo.RoomVO">
 		select * from room where ro_ac_num = #{ac_num}
 	</select>
+	<select id="selectRoomFileList" resultType="kr.sunrise.spring.vo.FileVO">
+		select * from file join room on fi_same_num = ro_code where ro_ac_num = #{ac_num}
+	</select>
+	<select id="selectRoom" resultType="kr.sunrise.spring.vo.RoomVO">
+		select * from room where ro_code = #{ro_code}
+	</select>
+	<insert id="signContract" useGeneratedKeys="true" keyProperty="co_num">
+		insert into contract(co_num, co_ac_name, co_ro_code, co_ro_num, co_me_id, co_me_rn, co_me_name, co_me_phone, co_month, co_price, co_enter_date, co_exite_date)
+		value(#{co_num}, #{co_ac_name}, #{co_ro_code}, #{co_ro_num}, #{co_me_id}, #{co_me_rn}, #{co_me_name}, #{co_me_phone}, #{co_month}, #{co_price}, #{co_enter_date}, #{co_exite_date})
+	</insert>
+	<select id="selectContract" resultType="kr.sunrise.spring.vo.ContractVO">
+		select * from contract where co_num = #{co_num}
+	</select>
+	<select id="selectContractInfo" resultType="kr.sunrise.spring.vo.ContractVO">
+		select * from contract where co_me_id = #{me_id}
+	</select>
+	<update id="updateRoom">
+		update room set
+			ro_floor = #{ro_floor},
+			ro_num = #{ro_num},
+			ro_content = #{ro_content},
+			ro_price = #{ro_price},
+			ro_premium = #{ro_premium},
+			ro_state = #{ro_state}
+		where ro_code = #{ro_code}
+	</update>
+	<select id="selectSpec" resultType="kr.sunrise.spring.vo.SpecVO">
+		select * from spec where sp_ro_code = #{ro_code}
+	</select>
 </mapper>

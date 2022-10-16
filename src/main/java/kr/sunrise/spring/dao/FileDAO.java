@@ -14,4 +14,5 @@ public interface FileDAO {
 	void deleteFile(int fi_num);
 	
 	ArrayList<FileVO> selectFileList(@Param("fi_ta_name")String fi_ta_name, @Param("fi_same_num")Integer fi_same_num);
+	
 }

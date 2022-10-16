@@ -14,7 +14,7 @@ public class RoomVO {
 	private String ro_content;
 	private int ro_price;
 	private String ro_premium="N";
-	private String ro_State="A";
+	private String ro_state="A";
 	
 	public String getRo_price_str() {
 		if(ro_price == 0)

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.sunrise.spring.vo.BusinessMemberVO;
 import kr.sunrise.spring.vo.MemberVO;
 
 public interface MemberDAO {
@@ -27,6 +28,8 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByIdEmail(@Param("m")MemberVO member);
 
-	void updateMember(@Param("m")MemberVO Member);
+	void updateMember(MemberVO Member);
+
+	ArrayList<BusinessMemberVO> selectBmList(BusinessMemberVO bm);
 
 }

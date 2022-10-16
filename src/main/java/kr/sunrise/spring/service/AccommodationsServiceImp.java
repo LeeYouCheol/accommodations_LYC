@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.sunrise.spring.dao.AccommodationsDAO;
+import kr.sunrise.spring.dao.FileDAO;
 import kr.sunrise.spring.pagination.Criteria;
 import kr.sunrise.spring.vo.AccommodationsVO;
+import kr.sunrise.spring.vo.ContractVO;
 import kr.sunrise.spring.vo.FileVO;
 import kr.sunrise.spring.vo.FloorMapVO;
+import kr.sunrise.spring.vo.MemberVO;
 import kr.sunrise.spring.vo.RoomVO;
 import kr.sunrise.spring.vo.SpecVO;
 
@@ -19,6 +22,8 @@ public class AccommodationsServiceImp implements AccommodationsService{
 
 	@Autowired
 	AccommodationsDAO accommodationsDao;
+	@Autowired
+	FileDAO fileDao;
 	@Autowired
 	FileService fileService;
 	
@@ -124,5 +129,68 @@ public class AccommodationsServiceImp implements AccommodationsService{
 			return null;
 		return accommodationsDao.selectRoomList(ac_num);
 	}
-	
+	@Override
+	public ArrayList<FileVO> getRoomFileList(Integer ac_num) {
+		if(ac_num == null)
+			return null;
+		return accommodationsDao.selectRoomFileList(ac_num);
+	}
+	@Override
+	public RoomVO getRoom(Integer ro_code) {
+		if(ro_code == null)
+			return null;
+		return accommodationsDao.selectRoom(ro_code);
+	}
+	@Override
+	public boolean signContract(ContractVO contract) {
+		if(contract == null)
+			return false;
+		return accommodationsDao.signContract(contract);
+	}
+	@Override
+	public ContractVO getContract(String co_num) {
+		if(co_num == null)
+			return null;
+		return accommodationsDao.selectContract(co_num);
+	}
+	@Override
+	public ContractVO getContract(MemberVO user) {
+		if(user == null || user.getMe_id() == null || user.getMe_id().length() == 0)
+			return null;
+		return accommodationsDao.selectContractInfo(user.getMe_id());
+	}
+	@Override
+	public boolean updateState(RoomVO room) {
+		if(room == null || room.getRo_state().equals("S"))
+			return false;
+		accommodationsDao.updateRoom(room);
+		return true;
+	}
+	@Override
+	public SpecVO getSpec(Integer ro_code) {
+		if(ro_code == null)
+			return null;
+		return accommodationsDao.selectSpec(ro_code);
+	}
+	@Override
+	public boolean updateRoom(RoomVO room, MultipartFile[] files, int[] nums) {
+		if(room == null || room.getRo_type() == null || room.getRo_type().length() == 0)
+			return false;
+		RoomVO dbRoom = accommodationsDao.selectRoom(room.getRo_code());
+		if(dbRoom == null)
+			return false;
+		int res = accommodationsDao.updateRoom(room);
+		if(res != 1)
+			return false;
+		if(nums != null && nums.length != 0) {
+			for(int fi_num : nums) {
+				FileVO fileVo = fileDao.selectFile(fi_num);
+				if(fileVo == null || fileVo.getFi_same_num() != room.getRo_code())
+					continue;
+				fileService.deleteFile(fileVo);
+			}
+		}
+		fileService.insertFiles(files,"room", room.getRo_code());
+		return true;
+	}
 }

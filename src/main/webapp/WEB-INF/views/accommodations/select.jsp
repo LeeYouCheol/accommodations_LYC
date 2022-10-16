@@ -64,6 +64,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
+
 <div class="lines-wrap">
     <div class="lines-inner">
 		<div class="lines"></div>
@@ -80,7 +81,7 @@
 <!-- 사진 슬라이드 -->
 <div class="untree_co_slider-wrap" data-aos="fade-up">
 	<div class="untree_co_slider">
-		<c:forEach items="${fileList }" var="file">
+		<c:forEach items="${fileList}" var="file">
 			<c:if test="${file.fi_ori_name.indexOf('안내도') < 0}">
 			<div class="item">
 				<img src="<c:url value="/file${file.fi_name }"></c:url>" alt="Image" class="img-fluid" id="slide">
@@ -137,7 +138,7 @@
 					<ul class="nav nav-tabs" role="tablist">
 						<c:forEach items="${mapList}" var="floor">
 							<li class="nav-item">
-						      <a class="nav-link" data-toggle="tab" href="#floor${floor.fm_fi_num}">${floor.fm_floor}층</a>
+						    	<a class="nav-link" data-toggle="tab" href="#floor${floor.fm_fi_num}">${floor.fm_floor}층</a>
 						    </li>
 		  				</c:forEach>
 					</ul>
@@ -146,27 +147,72 @@
 				  		<c:forEach items="${mapList}" var="floor">
 						    <div id="floor${floor.fm_fi_num}" class="container tab-pane">
 								<img style="width:900px;" src="<c:url value="/file${floor.fi_name}"></c:url>">
-						    </div>
-						    <!-- 층을 선택하면 층별안내도가 나오고 그 층에 맞는 객실을 출력 -->
-							<div class="container">
-								<!-- Nav pills -->
-								<ul class="nav nav-pills" role="tablist">
-									<c:forEach items="${roomList}" var="room">
-										<c:if test="${room.ro_floor == floor.fm_floor}">
-											<li class="nav-item">
-										    	<a class="nav-link" data-toggle="pill" href="#room${room.ro_num}">${room.ro_num}호</a>
-										    </li>
-										</c:if>
-								    </c:forEach>
-								</ul>
-								<!-- Tab panes -->
-								<div class="tab-content">
-									<div id="#room${room.ro_num}" class="container tab-pane active">
-								    	<img src="">
-								    </div>
+						    	<!-- 층별안내도에 맞는 층별 호수 출력 -->
+					    		<div class="container ">
+									<!-- Nav pills -->
+									<ul class="nav nav-pills" role="tablist">
+										<c:forEach items="${roomList}" var="room">
+											<c:if test="${room.ro_floor == floor.fm_floor}">
+												<li class="nav-item">
+											    	<a class="nav-link" data-toggle="tab" href="#room${room.ro_num}">${room.ro_num}호</a>
+											    </li>
+											</c:if>
+									    </c:forEach>
+									</ul>
+									<!-- 호수를 클릭하면 해당 객실 사진 출력 -->
+									<div class="tab-content">
+										<c:forEach items="${roomList}" var="room">
+											<c:if test="${room.ro_floor == floor.fm_floor}">
+											<div id="room${room.ro_num}" class="container tab-pane"><br>
+										    	<h3>${room.ro_num}호</h3>
+										    	<div id="demo${room.ro_num}" class="carousel slide" data-ride="carousel">
+													<!-- Indicators -->
+												  	<ul class="carousel-indicators">
+												  		<c:set var="index" value="0"></c:set>
+													  	<c:forEach items="${roomFileList}" var="roomFile">
+															<c:if test="${roomFile.fi_same_num == room.ro_code }">
+														    	<li data-target="#demo${room.ro_num}" data-slide-to="${index}" <c:if test="${index == 0 }">class="active"</c:if>></li>
+														    	<c:set var="index" value="${index+1}"></c:set>
+														    </c:if>
+													  	</c:forEach>
+												  	</ul>
+												  	<!-- The slideshow -->
+												  	<div class="carousel-inner">
+												  		<c:set var="index" value="0"></c:set>
+												  		<c:forEach items="${roomFileList}" var="roomFile">
+													  		<c:if test="${roomFile.fi_same_num == room.ro_code }">
+														    	<div class="carousel-item <c:if test="${index == 0 }">active</c:if>">
+														      		<img style="width: 1000px; height: 500px;" src="<c:url value="/file${roomFile.fi_name }"></c:url>">
+														    	</div>
+													    		<c:set var="index" value="${index+1}"></c:set>
+													    	</c:if>
+												    	</c:forEach>
+												  	</div>
+												  	<!-- Left and right controls -->
+												  	<a class="carousel-control-prev" href="#demo${room.ro_num}" data-slide="prev">
+												    	<span class="carousel-control-prev-icon"></span>
+												  	</a>
+												  	<a class="carousel-control-next" href="#demo${room.ro_num}" data-slide="next">
+												    	<span class="carousel-control-next-icon"></span>
+												  	</a>
+												</div>
+												<div>
+													<span>${room.ro_content}</span>
+												</div>
+												<c:if test="${room.ro_state == 'A'}">
+													<a class="btn btn-outline-primary mt-3" href="<c:url value="/accommodations/contract/${room.ro_code}?ac_num=${room.ro_ac_num }"></c:url>">계약</a>
+										    	</c:if>
+										    	<c:if test="${room.ro_state == 'N'}">
+										    		<a class="btn btn-outline-secondary disabled mt-3">계약중</a>
+										    		<span>계약일출력</span>
+										    	</c:if>
+										    </div>
+										    </c:if>
+										</c:forEach>
+									</div>
 								</div>
 							</div>
-				    	</c:forEach>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -324,7 +370,7 @@
 				</div>
 			</div>
 			<div class="tab-pane container fade" id="review">
-			
+				<a class="btn btn-outline-primary" href="<c:url value="/review/insert"></c:url>">리뷰등록</a>
 			</div>
 			<div class="tab-pane container fade" id="root">
 				

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.sunrise.spring.pagination.Criteria;
+import kr.sunrise.spring.pagination.PageMaker;
 import kr.sunrise.spring.service.AccommodationsService;
 import kr.sunrise.spring.service.MemberService;
+import kr.sunrise.spring.service.QnaService;
 import kr.sunrise.spring.vo.AccommodationsVO;
 import kr.sunrise.spring.vo.BusinessMemberVO;
+import kr.sunrise.spring.vo.ContractVO;
 import kr.sunrise.spring.vo.MemberVO;
+import kr.sunrise.spring.vo.QuestionVO;
 
 @Controller
 public class HomeController {
@@ -29,6 +34,8 @@ public class HomeController {
     MemberService memberService;
 	@Autowired
 	AccommodationsService accommodationsService;
+	@Autowired
+	QnaService qnaService;
 	
 	//홈페이지메소드
     @RequestMapping(value="/")
@@ -82,7 +89,7 @@ public class HomeController {
 			mv.setViewName("/main/signupBusiness");
 		return mv;
 	}
-    //아이디 중복체크
+    //ajax 아이디 중복체크
   	@RequestMapping(value ="/id/check")
   	@ResponseBody
   	public boolean idCheck(@RequestBody MemberVO member){
@@ -138,14 +145,42 @@ public class HomeController {
   		mv.setViewName("/main/find");
   		return mv;
   	}
+  	@RequestMapping(value = "/main/mypage", method = RequestMethod.GET)
+	public ModelAndView MypageGet(ModelAndView mv, HttpSession session,
+			String qu_where, Criteria cri) {
+  		MemberVO user = (MemberVO)session.getAttribute("user");
+  		ContractVO contract = accommodationsService.getContract(user);
+  		ArrayList<QuestionVO> qnaList = qnaService.getQuestionList(cri, qu_where);
+  		int totalCount = qnaService.getQuestionTotalCount(cri, qu_where);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		
+  		mv.addObject("contract", contract);
+  		mv.addObject("qnaList", qnaList);
+  		mv.addObject("pm", pm);
+		mv.setViewName("/main/mypage");
+		return mv;
+	}
   	//마이페이지
-  	@RequestMapping(value = "/member/mypage", method = RequestMethod.GET)
+  	@RequestMapping(value = "/main/mypageBusiness", method = RequestMethod.GET)
 	public ModelAndView memberMypageGet(ModelAndView mv, Criteria cri) {
   		ArrayList<AccommodationsVO> list = accommodationsService.getAccommodationsList(cri);
   		mv.addObject("list", list);
-		mv.setViewName("/member/mypage");
+		mv.setViewName("/main/mypageBusiness");
 		return mv;
 	}
+  	 @RequestMapping(value="/update", method = RequestMethod.GET)
+     public ModelAndView updateGet(ModelAndView mv) {
+         mv.setViewName("/main/update");
+         return mv;
+     }
+  	@RequestMapping(value="/update", method = RequestMethod.POST)
+    public ModelAndView updatePost(ModelAndView mv, MemberVO member,
+			HttpSession session) {
+  		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberService.updateMember(member,user);
+        mv.setViewName("/main/update");
+        return mv;
+    }
   	//ajax
   	@RequestMapping(value = "/id/check", method = RequestMethod.POST)
   	@ResponseBody

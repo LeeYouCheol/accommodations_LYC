@@ -39,11 +39,18 @@
 	</select>
 	<update id="updateMember">
 		update member set
-			me_pw = #{m.me_pw},
-			me_gender = #{m.me_gender},
-			me_birth = #{m.me_birth},
-			me_email = #{m.me_email},
-			me_authority = #{m.me_authority}
-		where me_id = #{m.me_id}
+			me_gender = #{me_gender},
+			me_pw = #{me_pw},
+			me_email = #{me_email},
+			me_post_code = #{me_post_code},
+			me_addr = #{me_addr},
+			me_addr_detail = #{me_addr_detail},
+			me_phone = #{me_phone},
+			me_job = #{me_job},
+			me_authority = #{me_authority}
+		where me_id = #{me_id}
 	</update>
+	<select id="selectBmList" resultType="kr.sunrise.spring.vo.BusinessMemberVO">
+		select * from businessmember
+	</select>
 </mapper>

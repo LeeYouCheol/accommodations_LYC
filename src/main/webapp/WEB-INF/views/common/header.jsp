@@ -71,21 +71,27 @@
 				</c:if>
 				<c:if test="${user.me_authority == 10 }">
 					${user.me_id} <a href="<c:url value="/admin/mypage"></c:url>">MyPage</a>
-			      	<li class="nav-item">
-			        	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
-			      	</li>
-		      	</c:if>
-		      	<c:if test="${user.me_authority == 2 }">
-		      		${user.me_id} <a href="<c:url value="/member/mypage"></c:url>">MyPage</a>
-			      	<li class="nav-item">
-			        	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
-			      	</li>
-		      	</c:if>
+	      	<li class="nav-item">
+	        	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
+	      	</li>
+      	</c:if>
+      	<c:if test="${user.me_authority == 2 }">
+      		${user.me_id} <a href="<c:url value="/main/mypageBusiness"></c:url>">MyPage</a>
+	      	<li class="nav-item">
+	        	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
+	      	</li>
+	      	<li class="nav-item">
+	      		<a href="<c:url value="#"></c:url>">정보수정</a>
+	      	</li>
+      	</c:if>
 				<c:if test="${user.me_authority == 1}">
-					${user.me_id}님 <a href="<c:url value="/mypage"></c:url>">MyPage</a>
+					${user.me_id}님 <a href="<c:url value="/main/mypage"></c:url>">MyPage</a>
 					<li class="nav-item">
-			        	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
-			      	</li>
+			    	<a href="<c:url value="/logout"></c:url>">로그아웃</a>
+			    </li>
+			    <li class="nav-item">
+			    	<a href="<c:url value="/update"></c:url>">정보수정</a>
+			    </li>
 				</c:if>
 	        </ul>
 	

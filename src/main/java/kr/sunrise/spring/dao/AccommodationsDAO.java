@@ -6,8 +6,11 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.sunrise.spring.pagination.Criteria;
 import kr.sunrise.spring.vo.AccommodationsVO;
+import kr.sunrise.spring.vo.ContractVO;
+import kr.sunrise.spring.vo.FileVO;
 import kr.sunrise.spring.vo.FloorMapVO;
 import kr.sunrise.spring.vo.RoomVO;
+import kr.sunrise.spring.vo.SpecVO;
 
 public interface AccommodationsDAO {
 
@@ -30,4 +33,19 @@ public interface AccommodationsDAO {
 	ArrayList<FloorMapVO> selectMapList(@Param("ac_num")Integer ac_num);
 
 	ArrayList<RoomVO> selectRoomList(Integer ac_num);
+
+	ArrayList<FileVO> selectRoomFileList(Integer ac_num);
+
+	RoomVO selectRoom(Integer ro_code);
+
+	boolean signContract(ContractVO contract);
+
+	ContractVO selectContract(String co_num);
+
+	ContractVO selectContractInfo(String me_id);
+
+	SpecVO selectSpec(Integer ro_code);
+
+	int updateRoom(RoomVO room);
+
 }

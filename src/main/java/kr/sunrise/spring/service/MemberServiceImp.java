@@ -233,5 +233,36 @@ public class MemberServiceImp implements MemberService{
 		memberDao.updateMember(Member);
 		return true;
 	}
-	
+	@Override
+	public ArrayList<BusinessMemberVO> getBmList(BusinessMemberVO bm) {
+		if(bm == null)
+			return null;
+		return memberDao.selectBmList(bm);
+	}
+	@Override
+	public void updateMember(MemberVO member, MemberVO user) {
+		if(member == null || user == null || member.getMe_id() == null)
+			return;
+		//화면에서 보낸 아이디와 로그인한 아이디가 다르면 수정 안함
+		if(!member.getMe_id().equals(user.getMe_id()))
+			return;
+		user.setMe_gender(member.getMe_gender());
+		user.setMe_email(member.getMe_email());
+		user.setMe_post_code(member.getMe_post_code());
+		user.setMe_addr(member.getMe_addr());
+		user.setMe_addr_detail(member.getMe_addr_detail());
+		user.setMe_phone(member.getMe_phone());
+		user.setMe_job(member.getMe_job());
+		
+		if(member.getMe_authority() != 0)
+			user.setMe_authority(member.getMe_authority());
+		//비밀번호가 있으면 암호화하여 저장
+		if(member.getMe_pw() != null || member.getMe_pw().length() != 0) {
+			String encPw = passwordEncoder.encode(member.getMe_pw());
+			user.setMe_pw(encPw);
+		}
+		memberDao.updateMember(user);
+		
+	}
+
 }
