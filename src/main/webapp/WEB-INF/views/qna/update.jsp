@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -22,9 +21,9 @@ table{
 	color: black;
 }
 td{
-	padding: 13px 13px 13px 8px;
+	padding: 13px 0px 13px 8px;
 }
-.th{
+th{
 	text-aligin: left;
 }
 </style>
@@ -52,11 +51,12 @@ td{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A 상세</h2>
+				<h2 class="text-secondary heading-2">Q & A 수정</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-9 bg-white p-5">
+				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" method="post" enctype="multipart/form-data">
 					<table>
 						<colgroup>
 							<col style="width:10%">
@@ -72,52 +72,49 @@ td{
 								</td>
 								<th scope="row">작성자</th>
 								<td>
-									<input class="form-control" type="text" value="${question.qu_me_id}" readonly>
-								</td>
-								<th scope="row">작성일</th>
-								<td>
-									<input class="form-control" type="text" value="${question.qu_date_str}" readonly>
+									<input class="form-control" type="text"value="${question.qu_me_id}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
 								<td colspan="6">
-									<input class="form-control" type="text" value="${question.qu_title}" readonly>
+									<input class="form-control col-14" type="text" name="qu_title" id="qu_title" value="${question.qu_title}">
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<div style="width:631px; height:150px;">${question.qu_content}</div>
+									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content">${question.qu_content}</textarea>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">첨부파일</th>
 								<td>
-									<div class="form-group">
-										<c:if test="${fileList.size() == 0 }">없음</c:if>
-						  				<c:if test="${fileList.size() != 0 }">
-						  					<c:forEach items="${fileList}" var="file">
-						  						<a class="form-group" href="<c:url value="/file${file.fi_ta_name }"></c:url>" class="form-control" download="${file.fi_ori_name }">${file.fi_ori_name}</a>
-						  					</c:forEach>
-						  				</c:if>
+									<div class="form-group box-files">
+										<c:forEach items="${fileList}" var="file">
+											<a class="form-control" href="javascript:0;">
+												<span>${file.fi_ori_name}</span>
+												<span class="btn-close" data-target="${file.fi_num }">X</span>
+											</a>
+										</c:forEach>
+										<c:forEach begin="1" end="${3-fileList.size()}">
+											<input type="file" class="form-control" name="files">
+										</c:forEach>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">비밀글</th>
+								<th>비밀글</th>
 								<td>
 									<div class="form-check">
-										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" readonly>비밀글을 원하면 체크 해주세요.
+										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" <c:if test="${question.qu_secret == '1'}">checked</c:if>>비밀글을 원하면 체크 해주세요.
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-				<c:if test="${question.qu_me_id == user.me_id}">
-					<a class="btn btn-primary float-right mt-4" href="<%=request.getContextPath()%>/qna/question/update/${question.qu_num}">QnA수정</a>
-					<a class="btn btn-secondary float-right mt-4" href="<%=request.getContextPath()%>/qna/question/delete/${question.qu_num}">QnA삭제</a>
-				</c:if>
+					<button class="btn btn-primary float-right mt-4">QnA수정</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -128,5 +125,36 @@ td{
 		<span class="sr-only">Loading...</span>
 	</div>
 </div>
+<script type="text/javascript">
+$(function(){
+	$('[name=qu_content]').summernote({
+    placeholder: '문의 내용을 입력하세요.',
+    tabsize: 2,
+    height: 400
+  });
+	$('form').submit(function(){
+		let qu_title = $('[name=qu_title]').val();
+		if(qu_title == ''){
+			alert('제목을 입력하세요.');
+			$('[name=qu_title]').focus();
+			return false;
+		}
+		let qu_content = $('[name=qu_content]').val();
+		if(qu_content == ''){
+			alert('내용을 입력하세요.');
+			$('[name=qu_content]').focus();
+			return false;
+		}
+	});
+	$(document).on('click', '.btn-close', function(){
+		let fi_num = $(this).data('target');
+		$(this).parent().remove();
+		let str = '';
+		str += '<input type="file" class="form-control" name="files">';
+		str += '<input type="hidden" name="nums" value="'+fi_num+'">';
+		$('.box-files').append(str);
+	})
+})
+</script>
 </body>
 </html>

@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -32,12 +31,12 @@ th{
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
-  <div class="lines-wrap">
-    <div class="lines-inner">
-      <div class="lines"></div>
-    </div>
+<div class="lines-wrap">
+  <div class="lines-inner">
+    <div class="lines"></div>
   </div>
-  <!-- END lines -->
+</div>
+<!-- END lines -->
 
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">
@@ -52,12 +51,12 @@ th{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A 수정</h2>
+				<h2 class="text-secondary heading-2">Q & A 등록</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-9 bg-white p-5">
-				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/qna/question/update"></c:url>" method="post" enctype="multipart/form-data">
+				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/qna/question/insert"></c:url>" method="post" enctype="multipart/form-data">
 					<table>
 						<colgroup>
 							<col style="width:10%">
@@ -67,40 +66,48 @@ th{
 						</colgroup>
 						<tbody>
 							<tr>
+								<th scope="row">문의 위치</th>
+								<td>
+									<select class="form-control" name="qu_where" id="qu_where">
+										<option value="0">문의위치</option>
+										<option value="moa">사이트</option>
+										<option value="acc">고시원</option>
+									</select>
+								</td>
 								<th scope="row">문의유형</th>
 								<td>
-									<input class="form-control" type="text" value="${question.qu_type}" readonly>
+									<select class="form-control" name="qu_type" id="qu_type">
+										<option value="0">문의유형</option>
+										<option value="signup">회원가입</option>
+										<option value="payment">결제</option>
+										<option value="accomodation">고시원</option>
+										<option value="business">사업자</option>
+									</select>
 								</td>
 								<th scope="row">작성자</th>
 								<td>
-									<input class="form-control" type="text"value="${question.qu_me_id}" readonly>
+									<input class="form-control" type="text" name="qu_me_id" value="${user.me_id}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
 								<td colspan="6">
-									<input class="form-control col-14" type="text" name="qu_title" id="qu_title" value="${question.qu_title}">
+									<input class="form-control col-14" type="text" name="qu_title" id="qu_title">
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content">${question.qu_content}</textarea>
+									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content"></textarea>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">첨부파일</th>
 								<td>
-									<div class="form-group box-files">
-										<c:forEach items="${fileList}" var="file">
-											<a class="form-control" href="javascript:0;">
-												<span>${file.fi_ori_name}</span>
-												<span class="btn-close" data-target="${file.fi_num }">X</span>
-											</a>
-										</c:forEach>
-										<c:forEach begin="1" end="${3-fileList.size()}">
-											<input type="file" class="form-control" name="files">
-										</c:forEach>
+									<div class="form-group">
+										<input type="file" class="form-control file" name="files">
+										<input type="file" class="form-control file" name="files">
+										<input type="file" class="form-control file" name="files">
 									</div>
 								</td>
 							</tr>
@@ -108,22 +115,16 @@ th{
 								<th>비밀글</th>
 								<td>
 									<div class="form-check">
-										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" <c:if test="${question.qu_secret == '1'}">checked</c:if>>비밀글을 원하면 체크 해주세요.
+										<input type="checkbox" class="form-check-input" value="1" name="qu_secret">비밀글을 원하면 체크 해주세요.
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<button class="btn btn-primary float-right mt-4">QnA수정</button>
+					<button class="btn btn-primary float-right mt-4">QnA등록</button>
 				</form>
 			</div>
 		</div>
-	</div>
-</div>
-<div id="overlayer"></div>
-<div class="loader">
-	<div class="spinner-border" role="status">
-		<span class="sr-only">Loading...</span>
 	</div>
 </div>
 <script type="text/javascript">
@@ -147,14 +148,6 @@ $(function(){
 			return false;
 		}
 	});
-	$(document).on('click', '.btn-close', function(){
-		let fi_num = $(this).data('target');
-		$(this).parent().remove();
-		let str = '';
-		str += '<input type="file" class="form-control" name="files">';
-		str += '<input type="hidden" name="nums" value="'+fi_num+'">';
-		$('.box-files').append(str);
-	})
 })
 </script>
 </body>

@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -23,7 +22,7 @@
 	border-bottom: 1px solid gray;
 }
 </style>
-<title>공지사항</title>
+<title>리뷰목록</title>
 </head>
 <body>
   <div class="lines-wrap">
@@ -46,7 +45,7 @@
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">공지사항</h2>
+				<h2 class="text-secondary heading-2">리뷰목록</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
@@ -61,7 +60,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${list}" var="notice">
+						<c:forEach items="${list}" var="review">
 							<c:if test="${notice.no_where == 'moa'}">
 								<tr>
 									<td>${notice.no_num}</td>
@@ -99,15 +98,6 @@
 				    	<a class="page-link" href="<c:url value="/notice/list?page=${pm.finalPage}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">마지막</a>
 				    </li>
 				</ul>
-				<form>
-					<div class="input-group mb-3">
-						<input class="form-control col-14" type="text" placeholder="제목으로 검색하세요." name="search" value="${pm.cri.search}">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">검색</button>
-						</div>
-						<input type="hidden" name="no_where" value="${no_where}">
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -120,4 +110,3 @@
 </div>
 </body>
 </html>
-

@@ -41,14 +41,18 @@ public interface AccommodationsService {
 
 	ContractVO getContract(String co_num);
 
-	ContractVO getContract(MemberVO user);
-
-	boolean updateState(RoomVO room);
+	ArrayList<ContractVO> getContractList(MemberVO user);
+	
+	boolean updateStateContract(RoomVO room);
 
 	SpecVO getSpec(Integer ro_code);
 
 	boolean updateRoom(RoomVO room, MultipartFile[] files, int[] nums);
 
-	
+	boolean updateAccPermit(AccommodationsVO accommodations);
+
+	boolean updateRoomState(RoomVO room);
+
+	ArrayList<FileVO> getReviewFileList(Integer ac_num);
 
 }

@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -81,7 +80,7 @@
 										</c:if>
 									</td>
 									<td>
-										<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
+										<a href="<%=request.getContextPath()%>/qna/select?qu_num=${question.qu_num}">${question.qu_title}</a>
 									</td>
 									<td>${question.qu_me_id}</td>
 									<td>${question.qu_date_str}</td>

@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -66,7 +65,7 @@
 								<tr>
 									<td>${notice.no_num}</td>
 									<td>
-										<a href="<c:url value="/notice/select/${notice.no_num}"></c:url>">${notice.no_title}</a>
+										<a href="<c:url value="/notice/select?no_num=${notice.no_num}"></c:url>">${notice.no_title}</a>
 									</td>
 									<td>${notice.no_me_id}</td>
 									<td>${notice.no_date_str}</td>

@@ -32,4 +32,7 @@ public interface MemberDAO {
 
 	ArrayList<BusinessMemberVO> selectBmList(BusinessMemberVO bm);
 
+	void updatePosPermit(BusinessMemberVO bm);
+
+	void updatePosCancel(BusinessMemberVO bm);
 }

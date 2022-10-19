@@ -64,9 +64,8 @@ public class NoticeController {
 		return mv;
 	}
 	//공지사항 상세 메소드
-    @RequestMapping(value = "/notice/select/{no_num}", method = RequestMethod.GET)
-	public ModelAndView noticeSelectGet(ModelAndView mv, 
-			@PathVariable("no_num") Integer no_num) {
+    @RequestMapping(value = "/notice/select", method = RequestMethod.GET)
+	public ModelAndView noticeSelectGet(ModelAndView mv, Integer no_num) {
 		NoticeVO notice = noticeService.getNotice(no_num);
 		ArrayList<FileVO> fileList = fileService.selectFileList("notice", no_num);
 		mv.addObject("fileList", fileList);
@@ -102,21 +101,12 @@ public class NoticeController {
 		return mv;
 	}
     //공지사항 삭제 메소드
-    @RequestMapping(value= "/notice/delete/{no_num}", method=RequestMethod.GET)
-	public ModelAndView noticeDeleteGet(ModelAndView mv,
-			@PathVariable("no_num")Integer no_num, HttpSession session,
-			String fi_ta_name, int fi_same_num) {
-		MemberVO user = (MemberVO) session.getAttribute("user");
-		noticeService.deleteNotice(no_num, user, fi_ta_name, fi_same_num);
-		mv.setViewName("redirect:/notice/list");
-		return mv;
-	}
-    @RequestMapping(value = "/notice/delete/{no_num}", method = RequestMethod.POST)
-	public ModelAndView noticeDeletePost(ModelAndView mv, @PathVariable("no_num")Integer no_num,
+    @RequestMapping(value = "/notice/delete", method = RequestMethod.GET)
+	public ModelAndView noticeDeletePost(ModelAndView mv, int no_num,
 			HttpSession session, HttpServletResponse response, String no_where,
-			NoticeVO notice, String fi_ta_name, int fi_same_num) {
+			NoticeVO notice) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		boolean res = noticeService.deleteNotice(no_num, user, fi_ta_name, fi_same_num);
+		boolean res = noticeService.deleteNotice(no_num, user, "notice", no_num);
 		if(res)
 			messageService.message(response, "공지사항이 삭제되었습니다.", "/spring/notice/list");
 		else

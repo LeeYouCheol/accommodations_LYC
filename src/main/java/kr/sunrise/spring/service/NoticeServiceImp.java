@@ -95,7 +95,7 @@ public class NoticeServiceImp implements NoticeService{
 		if(dbNotice == null)
 			return false;
 
-		if(user.getMe_authority() != 10 && !dbNotice.getNo_me_id().equals(user.getMe_id()))
+		if(user.getMe_authority() != "M" && !dbNotice.getNo_me_id().equals(user.getMe_id()))
 			return false;
 		
 		dbNotice.setNo_title(notice.getNo_title());
@@ -137,7 +137,7 @@ public class NoticeServiceImp implements NoticeService{
 		NoticeVO notice = noticeDao.selectNotice(no_num);
 		if(notice == null)
 			return false;
-		if(user.getMe_authority() != 10 && !notice.getNo_me_id().equals(user.getMe_id()))
+		if(user.getMe_authority() != "M" && !notice.getNo_me_id().equals(user.getMe_id()))
 			return false;
 		
 		ArrayList<FileVO> fileList = fileService.selectFileList(fi_ta_name, fi_same_num);

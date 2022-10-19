@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -22,9 +21,9 @@ table{
 	color: black;
 }
 td{
-	padding: 13px 0px 13px 8px;
+	padding: 13px 13px 13px 8px;
 }
-th{
+.th{
 	text-aligin: left;
 }
 </style>
@@ -52,12 +51,11 @@ th{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">Q & A 등록</h2>
+				<h2 class="text-secondary heading-2">Q & A 상세</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-9 bg-white p-5">
-				<form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="<c:url value="/qna/question/insert"></c:url>" method="post" enctype="multipart/form-data">
 					<table>
 						<colgroup>
 							<col style="width:10%">
@@ -67,89 +65,67 @@ th{
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">문의 위치</th>
-								<td>
-									<select class="form-control" name="qu_where" id="qu_where">
-										<option value="0">문의위치</option>
-										<option value="moa">사이트</option>
-										<option value="acc">고시원</option>
-									</select>
-								</td>
 								<th scope="row">문의유형</th>
 								<td>
-									<select class="form-control" name="qu_type" id="qu_type">
-										<option value="0">문의유형</option>
-										<option value="signup">회원가입</option>
-										<option value="payment">결제</option>
-										<option value="accomodation">고시원</option>
-										<option value="business">사업자</option>
-									</select>
+									<input class="form-control" type="text" value="${question.qu_type}" readonly>
 								</td>
 								<th scope="row">작성자</th>
 								<td>
-									<input class="form-control" type="text" name="qu_me_id" value="${user.me_id}" readonly>
+									<input class="form-control" type="text" value="${question.qu_me_id}" readonly>
+								</td>
+								<th scope="row">작성일</th>
+								<td>
+									<input class="form-control" type="text" value="${question.qu_date_str}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
 								<td colspan="6">
-									<input class="form-control col-14" type="text" name="qu_title" id="qu_title">
+									<input class="form-control" type="text" value="${question.qu_title}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<textarea style="width:700px; height:150px;" name="qu_content" id="qu_content"></textarea>
+									<div style="width:631px; height:150px;">${question.qu_content}</div>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">첨부파일</th>
 								<td>
 									<div class="form-group">
-										<input type="file" class="form-control file" name="files">
-										<input type="file" class="form-control file" name="files">
-										<input type="file" class="form-control file" name="files">
+										<c:if test="${fileList.size() == 0 }">없음</c:if>
+						  				<c:if test="${fileList.size() != 0 }">
+						  					<c:forEach items="${fileList}" var="file">
+						  						<a class="form-group" href="<c:url value="/file${file.fi_ta_name }"></c:url>" class="form-control" download="${file.fi_ori_name }">${file.fi_ori_name}</a>
+						  					</c:forEach>
+						  				</c:if>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th>비밀글</th>
+								<th scope="row">비밀글</th>
 								<td>
 									<div class="form-check">
-										<input type="checkbox" class="form-check-input" value="1" name="qu_secret">비밀글을 원하면 체크 해주세요.
+										<input type="checkbox" class="form-check-input" value="1" name="qu_secret" readonly>비밀글을 원하면 체크 해주세요.
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<button class="btn btn-primary float-right mt-4">QnA등록</button>
-				</form>
+				<c:if test="${question.qu_me_id == user.me_id}">
+					<a class="btn btn-primary float-right mt-4" href="<%=request.getContextPath()%>/qna/update/${question.qu_num}">QnA수정</a>
+					<a class="btn btn-secondary float-right mt-4" href="<%=request.getContextPath()%>/qna/delete/${question.qu_num}">QnA삭제</a>
+				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-$(function(){
-	$('[name=qu_content]').summernote({
-    placeholder: '문의 내용을 입력하세요.',
-    tabsize: 2,
-    height: 400
-  });
-	$('form').submit(function(){
-		let qu_title = $('[name=qu_title]').val();
-		if(qu_title == ''){
-			alert('제목을 입력하세요.');
-			$('[name=qu_title]').focus();
-			return false;
-		}
-		let qu_content = $('[name=qu_content]').val();
-		if(qu_content == ''){
-			alert('내용을 입력하세요.');
-			$('[name=qu_content]').focus();
-			return false;
-		}
-	});
-})
-</script>
+<div id="overlayer"></div>
+<div class="loader">
+	<div class="spinner-border" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
 </body>
 </html>

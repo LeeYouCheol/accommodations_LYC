@@ -24,6 +24,7 @@ import kr.sunrise.spring.service.MemberService;
 import kr.sunrise.spring.service.MessageService;
 import kr.sunrise.spring.service.NoticeService;
 import kr.sunrise.spring.service.QnaService;
+import kr.sunrise.spring.service.ReviewService;
 import kr.sunrise.spring.vo.AccommodationsVO;
 import kr.sunrise.spring.vo.ContractVO;
 import kr.sunrise.spring.vo.FileVO;
@@ -47,6 +48,8 @@ public class AccommodationsController {
 	@Autowired
 	QnaService qnaService;
 	@Autowired
+	ReviewService reviewService;
+	@Autowired
 	MessageService messageService;
 	@Autowired
 	FileService fileService;
@@ -68,7 +71,7 @@ public class AccommodationsController {
 	}
     //고시원목록
     @RequestMapping(value = "/accommodations/list", method = RequestMethod.GET)
-	public ModelAndView qnaListGet(ModelAndView mv, String ac_permit, Criteria cri) {
+	public ModelAndView accommodationsListGet(ModelAndView mv, Criteria cri) {
 		ArrayList<AccommodationsVO> list = accommodationsService.getAccommodationsList(cri);
 		int totalCount = accommodationsService.getAccommodationsTotalCount(cri);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
@@ -161,7 +164,7 @@ public class AccommodationsController {
     @RequestMapping(value = "/accommodations/select/{ac_num}", method = RequestMethod.GET)
    	public ModelAndView accommodationsSelectGet(ModelAndView mv, 
    			@PathVariable("ac_num")Integer ac_num, String no_where, String qu_where,
-   			Criteria cri) {
+   			Criteria cri, Integer re_num) {
     	//고시원 정보
     	AccommodationsVO accommodations = accommodationsService.getAccommodations(ac_num);
     	//해당 고시원에 해당하는 파일.상세이미지.
@@ -176,6 +179,10 @@ public class AccommodationsController {
     	ArrayList<NoticeVO> noticeList = noticeService.getNoticeList(cri, no_where);
     	//QnA리스트 가져오기
     	ArrayList<QuestionVO> qnaList = qnaService.getQuestionList(cri, qu_where);
+    	//리뷰목록
+    	ArrayList<ReviewVO> reviewList = reviewService.getReviewList(cri, ac_num);
+    	//리뷰 사진파일 가져오기
+    	ArrayList<FileVO> reviewFileList = accommodationsService.getReviewFileList(ac_num);
     	
     	mv.addObject("accommodations", accommodations);
    		mv.addObject("fileList", fileList);
@@ -184,20 +191,9 @@ public class AccommodationsController {
    		mv.addObject("roomFileList", roomFileList);
    		mv.addObject("noticeList", noticeList);
    		mv.addObject("qnaList", qnaList);
+   		mv.addObject("reviewList", reviewList);
+   		mv.addObject("reviewFileList", reviewFileList);
    		mv.setViewName("/accommodations/select");
-   		return mv;
-   	}
-    //리뷰 등록
-    @RequestMapping(value="/review/insert", method = RequestMethod.GET)
-    public ModelAndView reviewInsertGet(ModelAndView mv) {
-        mv.setViewName("/review/insert");
-        return mv;
-    }
-    @RequestMapping(value = "/review/insert", method = RequestMethod.POST)
-   	public ModelAndView reviewInsertPost(ModelAndView mv, ReviewVO review,
-   			RoomVO room, MultipartFile [] files,
-   			HttpServletResponse response) {
-   		messageService.message(response, "리뷰를 등록했습니다.", "/spring/member/mypage");
    		return mv;
    	}
     //계약 진행
@@ -220,7 +216,7 @@ public class AccommodationsController {
     public  Map<Object,Object> completePost(@RequestBody ContractVO contract, RoomVO room) {
   		HashMap<Object,Object> map = new HashMap<Object, Object>();
   		boolean res = accommodationsService.signContract(contract);
-  		boolean state = accommodationsService.updateState(room);
+  		boolean state = accommodationsService.updateStateContract(room);
   		
   		map.put("res",res);
   		map.put("state", state);
@@ -235,4 +231,22 @@ public class AccommodationsController {
     	mv.setViewName("/accommodations/complete");
         return mv;
     }
+    //수리 버튼 ajax
+    @RequestMapping(value= "/room/state/fix", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> ajaxStateFix(@RequestBody RoomVO room) {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		boolean res = accommodationsService.updateRoomState(room);
+		map.put("res", res);
+		return map;
+	}
+    //수리끝, 사용가능 상태로 변경하는 ajax
+    @RequestMapping(value= "/room/state/use", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> ajaxStateUse(@RequestBody RoomVO room) {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		boolean res = accommodationsService.updateRoomState(room);
+		map.put("res", res);
+		return map;
+	}
 }

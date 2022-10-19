@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -85,7 +84,7 @@ table{
 	        			<tbody>
 	        				<c:forEach items="${roomList}" var="room">
 									<tr>
-										<td id="body-item">${room.ro_code}</td>
+										<td class="body-item ro_code">${room.ro_code}</td>
 										<td id="body-item">${room.ro_type}</td>
 										<td id="body-item">${room.ro_num}</td>
 										<td id="body-item">${room.ro_price}</td>
@@ -112,6 +111,12 @@ table{
 											<a class="btn btn-outline-light text-dark" href="<c:url value="/room/select/${room.ro_code}"></c:url>">상세</a>
 											<a class="btn btn-outline-primary" href="<c:url value="/room/update/${room.ro_code}"></c:url>">수정</a>
 											<a class="btn btn-outline-danger" href="<c:url value="/room/delete/${room.ro_code}"></c:url>">삭제</a>
+											<c:if test="${room.ro_state == 'A'}">
+												<button type="button" class="btn btn-outline-secondary fix">수리</button>
+											</c:if>
+											<c:if test="${room.ro_state == 'F'}">
+												<button type="button" class="btn btn-outline-success use">사용</button>
+											</c:if>
 										</td>
 									</tr>
 								</c:forEach>
@@ -128,6 +133,57 @@ table{
 		<span class="sr-only">Loading...</span>
     </div>
 </div>
+<script>
+$(function(){
+	$('.fix').click(function(){
+		let ro_code = $(this).parent().siblings('.ro_code').text();
+		let ro_state = 'F';
+		let obj = {
+			ro_code : ro_code,
+			ro_state : ro_state
+		}
+		$.ajax({
+			async:true,
+			type:'POST',
+			data:JSON.stringify(obj),
+			url: '<%=request.getContextPath()%>/room/state/fix',
+			dataType:"json",
+			contentType:"application/json; charset=UTF-8",
+			success : function(data){
+				if(data.res){
+					alert('객실상태를 변경했습니다.');
+					document.location.href = document.location.href;
+				}else{
+					alert('잘못된 접근입니다.');
+				}
+			}
+		})
+	})
+	$('.use').click(function(){
+		let ro_code = $(this).parent().siblings('.ro_code').text();
+		let ro_state = 'A';
+		let obj = {
+			ro_code : ro_code,
+			ro_state : ro_state
+		}
+		$.ajax({
+			async:true,
+			type:'POST',
+			data:JSON.stringify(obj),
+			url: '<%=request.getContextPath()%>/room/state/use',
+			dataType:"json",
+			contentType:"application/json; charset=UTF-8",
+			success : function(data){
+				if(data.res){
+					alert('객실상태를 변경했습니다.');
+					document.location.href = document.location.href;
+				}else{
+					alert('잘못된 접근입니다.');
+				}
+			}
+		})
+	})
+})
+</script>
 </body>
 </html>
-

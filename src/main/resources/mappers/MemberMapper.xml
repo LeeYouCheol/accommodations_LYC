@@ -53,4 +53,14 @@
 	<select id="selectBmList" resultType="kr.sunrise.spring.vo.BusinessMemberVO">
 		select * from businessmember
 	</select>
+	<update id="updatePosPermit">
+		update businessmember set
+			bm_pos = #{bm_pos}
+		where bm_me_id = #{bm_me_id}
+	</update>
+	<update id="updatePosCancel">
+		update businessmember set
+			bm_pos = #{bm_pos}
+		where bm_me_id = #{bm_me_id}
+	</update>
 </mapper>

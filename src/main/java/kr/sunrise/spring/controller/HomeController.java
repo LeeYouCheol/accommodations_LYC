@@ -149,12 +149,12 @@ public class HomeController {
 	public ModelAndView MypageGet(ModelAndView mv, HttpSession session,
 			String qu_where, Criteria cri) {
   		MemberVO user = (MemberVO)session.getAttribute("user");
-  		ContractVO contract = accommodationsService.getContract(user);
+  		ArrayList<ContractVO> contractList = accommodationsService.getContractList(user);
   		ArrayList<QuestionVO> qnaList = qnaService.getQuestionList(cri, qu_where);
   		int totalCount = qnaService.getQuestionTotalCount(cri, qu_where);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
 		
-  		mv.addObject("contract", contract);
+  		mv.addObject("contractList", contractList);
   		mv.addObject("qnaList", qnaList);
   		mv.addObject("pm", pm);
 		mv.setViewName("/main/mypage");

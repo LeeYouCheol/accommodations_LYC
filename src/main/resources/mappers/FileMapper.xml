@@ -7,7 +7,6 @@
 	<insert id="insertFile" useGeneratedKeys="true" keyProperty="fi_num">
 		insert into file(fi_name, fi_ori_name, fi_ta_name, fi_same_num) values(#{fi_name}, #{fi_ori_name}, #{fi_ta_name}, #{fi_same_num})
 	</insert>
-	
 	<select id="selectFile" resultType="kr.sunrise.spring.vo.FileVO">
 		select * from file where fi_num = #{fi_num}
 	</select>

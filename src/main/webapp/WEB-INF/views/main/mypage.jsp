@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -17,7 +16,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script>
 <style>
 #container{
-	margin: 0; padding:0;
+	margin: 0; padding-left: 150px;
 }
 .sidetext{
 	float:left; font-weight:bold; color:black; position: relative;
@@ -35,7 +34,7 @@ table{
 #head{
 	border-bottom: 1px solid #e1e1e1; font-weight: bold;
 }
-#body-item{
+.body-item{
 	 text-align: center; color: black;
 }
 .btn{
@@ -55,11 +54,11 @@ table{
     <div class="site-mobile-menu-body"></div>
 </div>
 
-<div class="untree_co-section bg-light">
+<div class="untree_co-section bg-light" id="bg-light">
+	<div class="sidetext">
+		<h6>마이페이지</h6>
+	</div>
 	<div class="container" id="container">
-		<div class="sidetext">
-			<h6>마이페이지</h6>
-		</div>
     <div class="row justify-content-center" id="box">
 			<div class="mypage">
 	 			<h5 class="text-secondary heading-5">내 계약</h5>
@@ -77,32 +76,35 @@ table{
 						</colgroup>
 						<thead id="head">
 							<tr>
-								<th id="head-item" scope="col" class="num">계약번호</th>
-								<th id="head-item" scope="col" class="name">고시원이름</th>
-								<th id="head-item" scope="col" class="room">객실번호</th>
-								<th id="head-item" scope="col" class="singdate">계약일</th>
-								<th id="head-item" scope="col" class="month">계약기간</th>
-								<th id="head-item" scope="col" class="entr">입실일</th>
-								<th id="head-item" scope="col" class="exite">퇴실일</th>
-								<th id="head-item" scope="col" class="price">결제금액</th>
-								<th id="head-item" scope="col" class="state">관리</th>
+								<th class="body-item" scope="col">계약번호</th>
+								<th class="body-item" scope="col">고시원이름</th>
+								<th class="body-item" scope="col">객실번호</th>
+								<th class="body-item" scope="col">계약일</th>
+								<th class="body-item" scope="col">계약기간</th>
+								<th class="body-item" scope="col">입실일</th>
+								<th class="body-item" scope="col">퇴실일</th>
+								<th class="body-item" scope="col">결제금액</th>
+								<th class="body-item" scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td id="body-item">${contract.co_num}</td>
-								<td id="body-item">${contract.co_ac_name}</td>
-								<td id="body-item">${contract.co_ro_num}호</td>
-								<td id="body-item">${contract.co_sign_date_str}</td>
-								<td id="body-item">${contract.co_month}개월</td>
-								<td id="body-item">${contract.co_enter_date_str}</td>
-								<td id="body-item">${contract.co_exite_date_str}</td>
-								<td id="body-item">${contract.co_price_str}</td>
-								<td id="body-item">
-									<a class="btn btn-outline-primary" href="<c:url value="#"></c:url>">계약연장</a>
-									<a class="btn btn-outline-danger" href="<c:url value="#"></c:url>">퇴실</a>
-								</td>
-							</tr>
+							<c:forEach items="${contractList}" var="contract">
+								<tr>
+									<td class="body-item">${contract.co_num}</td>
+									<td class="body-item">${contract.co_ac_name}</td>
+									<td class="body-item">${contract.co_ro_num}호</td>
+									<td class="body-item">${contract.co_sign_date_str}</td>
+									<td class="body-item">${contract.co_month}개월</td>
+									<td class="body-item">${contract.co_enter_date_str}</td>
+									<td class="body-item">${contract.co_exite_date_str}</td>
+									<td class="body-item">${contract.co_price_str}</td>
+									<td class="body-item">
+										<a class="btn btn-outline-primary btn-sm" href="<c:url value="#"></c:url>">계약연장</a>
+										<a class="btn btn-outline-danger btn-sm" href="<c:url value="#"></c:url>">퇴실</a>
+										<a class="btn btn-outline-success btn-sm" href="<c:url value="/review/insert?co_num=${contract.co_num}"></c:url>">리뷰작성</a>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -199,7 +201,7 @@ table{
 							<c:forEach items="${qnaList}" var="question">
 								<c:if test="${question.qu_where == 'acc'}">
 									<tr>
-										<td>${question.qu_num}</td>
+										<td class="body-item">${question.qu_num}</td>
 										<td>
 											<c:if test="${question.qu_type == 'signup'}">
 												회원가입
@@ -214,11 +216,11 @@ table{
 												사업자
 											</c:if>
 										</td>
-										<td>
+										<td class="body-item">
 											<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
 										</td>
-										<td>${question.qu_me_id}</td>
-										<td>${question.qu_date_str}</td>
+										<td class="body-item">${question.qu_me_id}</td>
+										<td class="body-item">${question.qu_date_str}</td>
 									</tr>
 								</c:if>
 							</c:forEach>

@@ -154,16 +154,17 @@ public class AccommodationsServiceImp implements AccommodationsService{
 		return accommodationsDao.selectContract(co_num);
 	}
 	@Override
-	public ContractVO getContract(MemberVO user) {
+	public ArrayList<ContractVO> getContractList(MemberVO user) {
 		if(user == null || user.getMe_id() == null || user.getMe_id().length() == 0)
 			return null;
-		return accommodationsDao.selectContractInfo(user.getMe_id());
+		return accommodationsDao.selectContractList(user.getMe_id());
 	}
 	@Override
-	public boolean updateState(RoomVO room) {
-		if(room == null || room.getRo_state().equals("S"))
+	public boolean updateStateContract(RoomVO room) {
+		if(room == null)
 			return false;
-		accommodationsDao.updateRoom(room);
+		room.setRo_state("R");
+		accommodationsDao.updateStateContract(room);
 		return true;
 	}
 	@Override
@@ -192,5 +193,25 @@ public class AccommodationsServiceImp implements AccommodationsService{
 		}
 		fileService.insertFiles(files,"room", room.getRo_code());
 		return true;
+	}
+	@Override
+	public boolean updateRoomState(RoomVO room) {
+		if(room == null)
+			return false;
+		accommodationsDao.updateRoomState(room);
+		return true;
+	}
+	@Override
+	public boolean updateAccPermit(AccommodationsVO accommodations) {
+		if(accommodations == null)
+			return false;
+		accommodationsDao.updateAccPermit(accommodations);
+		return true;
+	}
+	@Override
+	public ArrayList<FileVO> getReviewFileList(Integer ac_num) {
+		if(ac_num == null)
+			return null;
+		return accommodationsDao.selectReviewFileList(ac_num);
 	}
 }

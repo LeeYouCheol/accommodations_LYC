@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -129,7 +128,7 @@
 						<option value="016" >016</option>
 					</select>
 					<input type="text" class="form-control col-4" id="me_phone2" name="me_phone2">
-					<input type=text" name="me_phone">
+					<input type="text" name="me_phone">
             	</div>
             </div>
 			<div class="form-group">

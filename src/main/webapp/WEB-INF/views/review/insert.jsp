@@ -2,22 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-
-
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script>
 
 
-<title>QnA</title>
+<title>리뷰등록</title>
 <style>
 table{
 	color: black;
@@ -33,12 +29,12 @@ th{
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
-  <div class="lines-wrap">
-    <div class="lines-inner">
-      <div class="lines"></div>
-    </div>
+<div class="lines-wrap">
+  <div class="lines-inner">
+    <div class="lines"></div>
   </div>
-  <!-- END lines -->
+</div>
+<!-- END lines -->
 
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">
@@ -68,25 +64,25 @@ th{
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">객실</th>
-								<td>
-									<input class="form-control" type="text" name="re_" value="${room.ro_num}" readonly>
-								</td>
-								<th scope="row">작성자</th>
-								<td>
-									<input class="form-control" type="text" name="re_me_id" value="${user.me_id}" readonly>
+								<th scope="row">계약번호</th>
+								<td colspan="6">
+									<input class="form-control" type="text" id="re_co_num" name="re_co_num" value="${contract.co_num}" readonly>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">별점</th>
+								<th scope="row">객실</th>
 								<td>
-									
+									<input class="form-control" type="text" value="${contract.co_ro_num}호" readonly>
+								</td>
+								<th scope="row">작성자</th>
+								<td>
+									<input class="form-control" type="text" id="re_me_id" name="re_me_id" value="${contract.co_me_id}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">내용</th>
 								<td colspan="6">
-									<textarea style="width:700px; height:150px;" name="ro_content" id="ro_content"></textarea>
+									<textarea style="width:700px; height:150px;" name="re_content" id="re_content"></textarea>
 								</td>
 							</tr>
 							<tr>
@@ -109,16 +105,16 @@ th{
 </div>
 <script type="text/javascript">
 $(function(){
-	$('[name=ro_content]').summernote({
-    placeholder: '내용을 입력하세요.',
+	$('[name=re_content]').summernote({
+    placeholder: '문의 내용을 입력하세요.',
     tabsize: 2,
     height: 400
   });
 	$('form').submit(function(){
-		let ro_content = $('[name=ro_content]').val();
-		if(ro_content == ''){
+		let re_content = $('[name=re_content]').val();
+		if(re_content == ''){
 			alert('내용을 입력하세요.');
-			$('[name=ro_content]').focus();
+			$('[name=re_content]').focus();
 			return false;
 		}
 	});

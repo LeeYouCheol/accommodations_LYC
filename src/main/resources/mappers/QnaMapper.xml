@@ -32,13 +32,12 @@
 	<!-- QnA 상세 -->
 	<select id="selectQuestion" resultType="kr.sunrise.spring.vo.QuestionVO">
 		select * from question where qu_num = #{qu_num}
-	</select>
-	
+	</select>	
 	<!-- QnA 수정시 -->
 	<update id="updateQuestion">
 		update question set
 			qu_title = #{qu_title},
-			qu_content = #{qu_content},
+			qu_content = #{qu_content}
 		where qu_num = #{qu_num}
 	</update>
 	<select id="selectFile" resultType="kr.sunrise.spring.vo.FileVO">
@@ -49,6 +48,6 @@
 	</delete>
 	<!-- QnA 삭제 -->
 	<delete id="deleteQuestion">
-		delete from board where qu_num = #{qu_num}
+		delete from question where qu_num = #{qu_num}
 	</delete>
 </mapper>

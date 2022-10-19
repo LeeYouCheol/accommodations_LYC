@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.sunrise.spring.vo.AccommodationsVO;
 import kr.sunrise.spring.vo.BusinessMemberVO;
 import kr.sunrise.spring.vo.MemberVO;
 
@@ -32,10 +33,13 @@ public interface MemberService {
 	ArrayList<String> getIdList(MemberVO member);
 
 	boolean findpw(MemberVO member);
-
+	
 	ArrayList<BusinessMemberVO> getBmList(BusinessMemberVO bm);
-
+	
 	void updateMember(MemberVO member, MemberVO user);
 
+	boolean updatePosPermit(BusinessMemberVO bm);
+
+	boolean updatePosCancel(BusinessMemberVO bm);
 
 }

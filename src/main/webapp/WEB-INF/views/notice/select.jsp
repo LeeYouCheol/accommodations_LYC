@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -97,7 +96,7 @@ td{
 					</table>
 				<c:if test="${notice.no_me_id == user.me_id}">
 					<a class="btn btn-primary float-right mt-4" href="<%=request.getContextPath()%>/notice/update/${notice.no_num}">수정</a>
-					<a class="btn btn-secondary float-right mt-4" href="<%=request.getContextPath()%>/notice/delete/${notice.no_num}">삭제</a>
+					<a class="btn btn-secondary float-right mt-4" href="<%=request.getContextPath()%>/notice/delete?no_num=${notice.no_num}">삭제</a>
 				</c:if>
 			</div>
 		</div>

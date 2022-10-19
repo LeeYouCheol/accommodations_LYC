@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -124,7 +123,7 @@ th{
 								<td>
 									<input type="text" class="form-control" id="co_exite_date" name="co_exite_date" readonly>
 								</td>
-								<td>
+								<td class="co_ro_code">
 									<input type="hidden" class="form-control" id="co_ro_code" name="co_ro_code" value="${room.ro_code}" readonly>
 								</td>
 							</tr>
@@ -247,7 +246,6 @@ function payment(data){
 		let co_price = $('input[name=inputValue]').val();
 		let co_enter_date = $('#co_enter_date').val();
 		let co_exite_date = $('#co_exite_date').val();
-		
 		if(rsp.success){
 			let obj = {
 					co_num : rsp.merchant_uid,
@@ -264,7 +262,7 @@ function payment(data){
 					co_exite_date: co_exite_date
 			}
 			console.log(obj);
-			ajaxPost(false, obj, '/accommodations/contract/{ro_code}',function(data){
+			ajaxPost(false, obj, '/accommodations/contract/${room.ro_code}',function(data){
 				if(data.res){
 					alert("결제가 완료되었습니다.");
 				 	location.href = "http://localhost:8080/spring/accommodations/complete?co_num="+rsp.merchant_uid

@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
 
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -59,16 +58,87 @@
 .head{
 	border-bottom: 1px solid gray;
 }
+.review-content{
+	border: 1px solid #dfdfdf; border-raius: 4px; overflow: hidden; color: #353535;
+}
+#review{
+	border : 0; border-spacing: 0; border-collapse: collapse;
+}
+#box-head{
+	border-bottom: 1px solid #e1e1e1; background: #f8f8f8;
+}
+.head-item{
+	padding: 15px 0; vertical-align : middle; text-align: center;
+}
+.thumb{
+	padding: 10px;
+}
+.body-item{
+	vertical-align : middle; text-align: center; border-bottom: 1px solid #e1e1e1;
+}
+.content{
+	text-align: left; cursor: pointer;
+}
+
+.total-content{
+	position: absolute; top: 50%; left: 50%; width: 920px; height: 540px;
+  margin: -270px 0 0 -460px; background-color: #fff;
+}
+.total-close{
+	position: absolute; right: 0; bottom: 100%; left: 0; padding-bottom: 25px;
+}
+.modal-close{
+	border: none; background-color: transparent; cursor: pointer; position: fixed;
+  top: 0; right: 0; width: 90px; height: 90px; opacity: .55;
+}
+.modal-close:before{
+	background-image: url(https://static-resource-smartstore.pstatic.net/smartstore/p/static/20221018113958/img/sprite/svg/spIcon_svg.svg);
+  background-size: 726px 688px; background-position: -147px -546px; width: 30px;
+  height: 30px; display: inline-block; content: "";
+}
+.photo-box{
+	position: relative; overflow: hidden; float: left; box-sizing: border-box;
+  width: 540px; height: 100%; border-right: 1px solid rgba(0,0,0,.07);
+  background-color: #f1f3f5;
+}
+.review{
+	position: relative; float: left; box-sizing: border-box; width: 380px;
+  height: 100%; padding-left: 25px;
+}
+.review-head{
+	position: absolute; top: 0; right: 25px; left: 25px; box-sizing: border-box;
+  height: 71px; padding: 20px 0 15px; border-bottom: 1px solid #f3f3f3;
+}
+.review-info{
+	position: relative; z-index: 1; height: 36px;
+}
+.review-body{
+	box-sizing: border-box; height: 100%; padding-top: 71px; padding-bottom: 123px;
+}
+.review-content{
+	overflow-y: auto; box-sizing: border-box; height: 100%; padding: 15px 25px 17px 0;
+	border: none;
+}
+.cotract-num{
+	display: block; margin-bottom: 10px; word-wrap: break-word; font-size: 12px;
+	line-height: 16px; color: #999;
+}
+.review-detail{
+	font-size: 13px; line-height: 22px; color: #5f5f5f; white-space: pre-wrap;
+  word-break: break-word; overflow-wrap: break-word;
+}
+.carousel, .carousel-inner, .carousel-item{
+	height: 100%;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
 <body>
-
 <div class="lines-wrap">
-    <div class="lines-inner">
+	<div class="lines-inner">
 		<div class="lines"></div>
-    </div>
+  </div>
 </div>
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">
@@ -200,14 +270,16 @@
 													<span>${room.ro_content}</span>
 												</div>
 												<c:if test="${room.ro_state == 'A'}">
-													<a class="btn btn-outline-primary mt-3" href="<c:url value="/accommodations/contract/${room.ro_code}?ac_num=${room.ro_ac_num }"></c:url>">계약</a>
+													<a class="btn btn-outline-primary mt-3" href="<c:url value="/accommodations/contract/${room.ro_code}?ac_num=${room.ro_ac_num}"></c:url>">계약</a>
 										    	</c:if>
-										    	<c:if test="${room.ro_state == 'N'}">
-										    		<a class="btn btn-outline-secondary disabled mt-3">계약중</a>
-										    		<span>계약일출력</span>
-										    	</c:if>
-										    </div>
+										    <c:if test="${room.ro_state == 'R'}">
+										    	<button class="btn btn-secondary disabled mt-3" disabled>계약중</button>
+										    	<div>
+										    		<h4>${contract.co_exite_date_str}</h4>
+										    	</div>
 										    </c:if>
+										   </div>
+										   </c:if>
 										</c:forEach>
 									</div>
 								</div>
@@ -370,10 +442,144 @@
 				</div>
 			</div>
 			<div class="tab-pane container fade" id="review">
-				<a class="btn btn-outline-primary" href="<c:url value="/review/insert"></c:url>">리뷰등록</a>
+				<div class="container">
+					<div class="row justify-content-center text-center mb-5">
+						<div class="col-lg-6 mt-3">
+							<h2 class="text-secondary heading-2">후기</h2>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 bg-white p-5">
+							<div class="review-content">
+								<table id="review">
+									<colgroup>
+											<col style="width:150px;">
+											<col style="width:300px;">
+											<col style="width:100px;">
+											<col style="width:150px;">
+										</colgroup>
+									<thead id="box-head">
+										<tr>
+											<th class="head-item" scope="col">사진</th>
+											<th class="head-item" scope="col">내용</th>
+											<th class="head-item" scope="col">작성자</th>
+											<th class="head-item" scope="col">작성일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${reviewList}" var="review" varStatus="vs">
+											<tr>
+												<td class="thumb">
+													<img src="<c:url value="/file${review.re_thumb}"></c:url>" width="150" height="150">
+												</td>
+												<td class="body-item content" data-toggle="modal" data-target="#myModal${vs.count}">${review.re_content}</td>
+												<td class="body-item">${review.re_me_id}</td>
+												<td class="body-item">${review.re_reg_date_str}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<ul class="pagination justify-content-center">
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/review/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+							  	</li>
+							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+							  		<a class="page-link" href="<c:url value="/review/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+							  	</li>
+							  	
+							  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
+							    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+							    		<a class="page-link" href="<c:url value="/review/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+							    	</li>
+							    </c:forEach>
+							
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link " href="<c:url value="/review/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+							    </li>
+							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+							    	<a class="page-link" href="<c:url value="/review/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+							    </li>
+								</ul>
+								<c:forEach items="${reviewList}" var="review" varStatus="vs">
+								<div class="modal" id="myModal${vs.count}">
+								  <div class="modal-dialog modal-dialog-centered modal-xl">
+								    <div class="modal-content">
+								    	<div class="total-content">
+								    		<div class="total-close">
+								    			<button type="button" class="modal-close" data-dismiss="modal"></button>
+								    		</div>
+								    		<div class="photo-box">
+													<div id="demo${review.re_num}" class="carousel slide" data-ride="carousel">
+													  <!-- Indicators -->
+													  <ul class="carousel-indicators">
+													    <c:set var="index" value="0"></c:set>
+													    <c:forEach items="${reviewFileList}" var="reviewFile">
+																<c:if test="${reviewFile.fi_same_num == review.re_num}">
+																	<li data-target="#demo${review.re_num}" data-slide-to="${index}" <c:if test="${index == 0 }">class="active"</c:if>></li>
+															    		<c:set var="index" value="${index+1}"></c:set>
+																 </c:if>
+															</c:forEach>
+													  </ul>
+													
+													  <!-- The slideshow -->
+													  <div class="carousel-inner">
+												    	<c:set var="index" value="0"></c:set>
+												      <c:forEach items="${reviewFileList}" var="reviewFile">
+																<c:if test="${reviewFile.fi_same_num == review.re_num}">
+																	 <div class="carousel-item <c:if test="${index == 0 }">active</c:if>">
+																   		<img class="review-image" style="width: 100%; height: 100%;" src="<c:url value="/file${reviewFile.fi_name }"></c:url>">
+																	</div>
+																	<c:set var="index" value="${index+1}"></c:set>
+																</c:if>
+															</c:forEach>
+													  </div>
+													  <!-- Left and right controls -->
+													  <a class="carousel-control-prev" href="#demo${review.re_num}" data-slide="prev">
+													    <span class="carousel-control-prev-icon"></span>
+													  </a>
+													  <a class="carousel-control-next" href="#demo${review.re_num}" data-slide="next">
+													    <span class="carousel-control-next-icon"></span>
+													  </a>
+													</div>
+												</div>
+												<div class="review">
+													<div class="review-head">
+															<div class="review-info">
+																<strong>${review.re_me_id}</strong>
+																<span>${review.re_reg_date_str}</span>
+															</div>
+													</div>
+													<div class="review-body">
+														<div class="review-content">
+															<em class="cotract-num">${review.re_co_num}</em>
+															<p class="review-detail">${review.re_content}</p>
+														</div>
+													</div>
+												</div>
+											</div>
+							    	</div>
+							  	</div>
+							  </div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="tab-pane container fade" id="root">
-				
+				<div class="container">
+					<div class="row justify-content-center text-center mb-5">
+						<div class="col-lg-12 mt-3">
+							<h2 class="text-secondary heading-2">오시는길</h2>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-10 bg-white p-5">
+							
+
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -384,10 +590,5 @@
 		<span class="sr-only">Loading...</span>
 	</div>
 </div>
-<script>
-$(function(){
-	$('#room .nav-link').first().click();
-})
-</script>
 </body>
 </html>

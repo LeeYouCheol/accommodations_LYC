@@ -92,7 +92,7 @@ public class QnaServiceImp implements QnaService{
 		if(dbQuestion == null)
 			return false;
 
-		if(user.getMe_authority() != 10 && !dbQuestion.getQu_me_id().equals(user.getMe_id()))
+		if(user.getMe_authority() != "M" && !dbQuestion.getQu_me_id().equals(user.getMe_id()))
 			return false;
 		
 		dbQuestion.setQu_title(question.getQu_title());
@@ -134,7 +134,7 @@ public class QnaServiceImp implements QnaService{
 		QuestionVO question = qnaDao.selectQuestion(qu_num);
 		if(question == null)
 			return false;
-		if(user.getMe_authority() != 10 && !question.getQu_me_id().equals(user.getMe_id()))
+		if(user.getMe_authority() != "M" && !question.getQu_me_id().equals(user.getMe_id()))
 			return false;
 		
 		ArrayList<FileVO> fileList = fileService.selectFileList(fi_ta_name, fi_same_num);

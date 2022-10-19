@@ -42,10 +42,20 @@ public interface AccommodationsDAO {
 
 	ContractVO selectContract(String co_num);
 
-	ContractVO selectContractInfo(String me_id);
+	
 
 	SpecVO selectSpec(Integer ro_code);
 
+	void updateStateContract(RoomVO room);
+	
 	int updateRoom(RoomVO room);
+
+	ArrayList<ContractVO> selectContractList(String me_id);
+	
+	void updateRoomState(RoomVO room);
+
+	void updateAccPermit(AccommodationsVO accommodations);
+
+	ArrayList<FileVO> selectReviewFileList(Integer ac_num);
 
 }

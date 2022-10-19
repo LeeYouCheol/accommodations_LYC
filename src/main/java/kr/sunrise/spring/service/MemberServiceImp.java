@@ -254,7 +254,7 @@ public class MemberServiceImp implements MemberService{
 		user.setMe_phone(member.getMe_phone());
 		user.setMe_job(member.getMe_job());
 		
-		if(member.getMe_authority() != 0)
+		if(member.getMe_authority() != null)
 			user.setMe_authority(member.getMe_authority());
 		//비밀번호가 있으면 암호화하여 저장
 		if(member.getMe_pw() != null || member.getMe_pw().length() != 0) {
@@ -264,5 +264,26 @@ public class MemberServiceImp implements MemberService{
 		memberDao.updateMember(user);
 		
 	}
-
+	@Override
+	public boolean updatePosPermit(BusinessMemberVO bm) {
+		if(bm == null)
+			return false;
+		MemberVO member = memberDao.selectMember(bm.getBm_me_id());
+		member.setMe_authority("B"); 
+		memberDao.updatePosPermit(bm);
+		//해당 회원의 등급을 변경
+		memberDao.updateMember(member);
+		return true;
+	}
+	@Override
+	public boolean updatePosCancel(BusinessMemberVO bm) {
+		if(bm == null)
+			return false;
+		MemberVO member = memberDao.selectMember(bm.getBm_me_id());
+		member.setMe_authority("N");
+		memberDao.updatePosCancel(bm);
+		//해당 회원의 등급을 변경
+		memberDao.updateMember(member);
+		return true;
+	}
 }

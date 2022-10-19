@@ -27,7 +27,7 @@
 	<update id="updateNotice">
 		update notice set
 			no_title = #{no_title},
-			no_content = #{no_content},
+			no_content = #{no_content}
 		where no_num = #{no_num}
 	</update>
 	<delete id="deleteNotice">

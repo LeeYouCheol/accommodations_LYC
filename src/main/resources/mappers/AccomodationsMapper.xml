@@ -54,7 +54,7 @@
 	<select id="selectContract" resultType="kr.sunrise.spring.vo.ContractVO">
 		select * from contract where co_num = #{co_num}
 	</select>
-	<select id="selectContractInfo" resultType="kr.sunrise.spring.vo.ContractVO">
+	<select id="selectContractList" resultType="kr.sunrise.spring.vo.ContractVO">
 		select * from contract where co_me_id = #{me_id}
 	</select>
 	<update id="updateRoom">
@@ -69,5 +69,23 @@
 	</update>
 	<select id="selectSpec" resultType="kr.sunrise.spring.vo.SpecVO">
 		select * from spec where sp_ro_code = #{ro_code}
+	</select>
+	<update id="updateStateContract">
+		update room set
+			ro_state = #{ro_state}
+		where ro_code = #{ro_code}
+	</update>
+	<update id="updateRoomState">
+		update room set
+			ro_state = #{ro_state}
+		where ro_code = #{ro_code}
+	</update>
+	<update id="updateAccPermit">
+		update accommodations set
+			ac_permit = #{ac_permit}
+		where ac_num = #{ac_num}
+	</update>
+	<select id="selectReviewFileList" resultType="kr.sunrise.spring.vo.FileVO">
+		select * from file join review on fi_same_num = re_num where re_ac_num = #{ac_num} and fi_ta_name = 'review'
 	</select>
 </mapper>
