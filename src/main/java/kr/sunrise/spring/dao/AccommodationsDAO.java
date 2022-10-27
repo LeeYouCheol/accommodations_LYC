@@ -16,9 +16,9 @@ public interface AccommodationsDAO {
 
 	void insertAccommodations(AccommodationsVO accomodations);
 
-	ArrayList<AccommodationsVO> selectAccommodationsList(Criteria cri);
+	ArrayList<AccommodationsVO> selectAccommodationsList(@Param("cri")Criteria cri);
 
-	int selectAccommodationsTotalCount(Criteria cri);
+	int selectAccommodationsTotalCount(@Param("cri")Criteria cri);
 
 	AccommodationsVO selectAccommodations(Integer ac_num);
 
@@ -57,5 +57,15 @@ public interface AccommodationsDAO {
 	void updateAccPermit(AccommodationsVO accommodations);
 
 	ArrayList<FileVO> selectReviewFileList(Integer ac_num);
+
+	ContractVO selectcontractroom(Integer ro_code);
+
+	ContractVO selectContractInfo(String co_num);
+
+	RoomVO selectRoomExtend(Integer co_ro_code);
+
+	boolean updateContractState(ContractVO contract);
+
+	void updateRoomStateExite(RoomVO room);
 
 }

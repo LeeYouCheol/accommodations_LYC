@@ -29,5 +29,7 @@ public interface QnaDAO {
 	int deleteQuestion(Integer qu_num);
 
 	int updateQuestion(QuestionVO Question);
+
+	ArrayList<QuestionVO> selectQuestionListMy(@Param("cri")Criteria cri, @Param("qu_where")String qu_where, @Param("me_id")String me_id);
 	
 }

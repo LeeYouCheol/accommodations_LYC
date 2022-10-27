@@ -50,4 +50,12 @@
 	<delete id="deleteQuestion">
 		delete from question where qu_num = #{qu_num}
 	</delete>
+	<select id="selectQuestionListMy" resultType="kr.sunrise.spring.vo.QuestionVO">
+		select * from question where qu_me_id = #{me_id} and qu_where like concat('%',#{qu_where}, '%')
+		<if test="qu_where == 'moa'">
+			and qu_name like concat('%',#{cri.search},'%')
+		</if>
+		order by qu_ori_num desc, qu_num asc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
 </mapper>

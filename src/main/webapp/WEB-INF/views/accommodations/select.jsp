@@ -268,16 +268,16 @@
 												</div>
 												<div>
 													<span>${room.ro_content}</span>
+													<c:if test="${room.ro_state == 'A'}">
+														<a class="btn btn-outline-primary mt-3" href="<c:url value="/accommodations/contract?ro_code=${room.ro_code}&ac_num=${room.ro_ac_num}"></c:url>">계약</a>
+											    </c:if>
+											    <c:if test="${room.ro_state == 'R'}">
+														<button class="btn btn-secondary mt-3" disabled>이용중</button>
+											    </c:if>
+											    <c:if test="${room.ro_state == 'F'}">
+														<button class="btn btn-secondary mt-3" disabled>수리중</button>
+											    </c:if>
 												</div>
-												<c:if test="${room.ro_state == 'A'}">
-													<a class="btn btn-outline-primary mt-3" href="<c:url value="/accommodations/contract/${room.ro_code}?ac_num=${room.ro_ac_num}"></c:url>">계약</a>
-										    	</c:if>
-										    <c:if test="${room.ro_state == 'R'}">
-										    	<button class="btn btn-secondary disabled mt-3" disabled>계약중</button>
-										    	<div>
-										    		<h4>${contract.co_exite_date_str}</h4>
-										    	</div>
-										    </c:if>
 										   </div>
 										   </c:if>
 										</c:forEach>
@@ -321,29 +321,29 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							<c:if test="${user.me_authority == '2'}">
+							<c:if test="${user.me_authority == 'B'}">
 								<a href="<c:url value="/notice/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">공지사항등록</a>
 							</c:if>
 							<ul class="pagination justify-content-center">
-							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-							  		<a class="page-link" href="<c:url value="/notice/list?page=1&search=${pm.cri.search}&no_where=${no_where}"></c:url>">처음</a>
-							  	</li>
-							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-							  		<a class="page-link" href="<c:url value="/notice/list?page=${pm.startPage-1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">이전</a>
-							  	</li>
-							  	
-							  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
-							    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-							    		<a class="page-link" href="<c:url value="/notice/list?page=${i}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">${i}</a>
-							    	</li>
-							    </c:forEach>
-							
-							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-							    	<a class="page-link " href="<c:url value="/notice/list?page=${pm.endPage+1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">다음</a>
-							    </li>
-							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-							    	<a class="page-link" href="<c:url value="/notice/list?page=${pm.finalPage}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">마지막</a>
-							    </li>
+						  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+						  		<a class="page-link" href="<c:url value="/notice/list?page=1&search=${pm.cri.search}&no_where=${no_where}"></c:url>">처음</a>
+						  	</li>
+						  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
+						  		<a class="page-link" href="<c:url value="/notice/list?page=${pm.startPage-1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">이전</a>
+						  	</li>
+						  	
+						  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
+						    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+						    		<a class="page-link" href="<c:url value="/notice/list?page=${i}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">${i}</a>
+						    	</li>
+						    </c:forEach>
+						
+						    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+						    	<a class="page-link " href="<c:url value="/notice/list?page=${pm.endPage+1}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">다음</a>
+						    </li>
+						    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
+						    	<a class="page-link" href="<c:url value="/notice/list?page=${pm.finalPage}&search=${pm.cri.search}&no_where=${no_where}"></c:url>">마지막</a>
+						    </li>
 							</ul>
 							<form>
 								<div class="input-group mb-3">
@@ -406,26 +406,26 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							<a href="<c:url value="/qna/question/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
+							<a href="<c:url value="/qna/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
 							<ul class="pagination justify-content-center">
 							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-							  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+							  		<a class="page-link" href="<c:url value="/qna/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
 							  	</li>
 							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-							  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+							  		<a class="page-link" href="<c:url value="/qna/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
 							  	</li>
 							  	
 							  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
 							    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-							    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+							    		<a class="page-link" href="<c:url value="/qna/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
 							    	</li>
 							    </c:forEach>
 							
 							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-							    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+							    	<a class="page-link " href="<c:url value="/qna/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
 							    </li>
 							    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-							    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+							    	<a class="page-link" href="<c:url value="/qna/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
 							    </li>
 							</ul>
 							<form>
@@ -479,7 +479,7 @@
 										</c:forEach>
 									</tbody>
 								</table>
-								<ul class="pagination justify-content-center">
+								<ul class="pagination justify-content-center mt-5">
 							  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
 							  		<a class="page-link" href="<c:url value="/review/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
 							  	</li>

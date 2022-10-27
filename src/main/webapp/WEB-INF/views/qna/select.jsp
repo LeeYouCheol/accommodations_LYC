@@ -67,7 +67,18 @@ td{
 							<tr>
 								<th scope="row">문의유형</th>
 								<td>
-									<input class="form-control" type="text" value="${question.qu_type}" readonly>
+									<c:if test="${question.qu_type == 'signup'}">
+										<span>회원가입</span>
+									</c:if>
+									<c:if test="${question.qu_type == 'business'}">
+										<span>사업자</span>
+									</c:if>
+									<c:if test="${question.qu_type == 'accomodation'}">
+										<span>고시원</span>
+									</c:if>
+									<c:if test="${question.qu_type == 'payment'}">
+										<span>결제</span>
+									</c:if>
 								</td>
 								<th scope="row">작성자</th>
 								<td>

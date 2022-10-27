@@ -103,35 +103,37 @@ thead{
 	        	</div>
 	        	<ul class="pagination justify-content-center mt-3">
 				  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-				  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+				  		<a class="page-link" href="<c:url value="/accommodations/list?page=1&search=${pm.cri.search}&searchType=${pm.cri.searchType}"></c:url>">처음</a>
 				  	</li>
 				  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-				  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+				  		<a class="page-link" href="<c:url value="/accommodations/list?page=${pm.startPage-1}&search=${pm.cri.search}&searchType=${pm.cri.searchType}"></c:url>">이전</a>
 				  	</li>
 				  	
 				  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
 				    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-				    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+				    		<a class="page-link" href="<c:url value="/accommodations/list?page=${i}&search=${pm.cri.search}&searchType=${pm.cri.searchType}"></c:url>">${i}</a>
 				    	</li>
 				    </c:forEach>
 				
 				    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-				    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+				    	<a class="page-link " href="<c:url value="/accommodations/list?page=${pm.endPage+1}&search=${pm.cri.search}&searchType=${pm.cri.searchType}"></c:url>">다음</a>
 				    </li>
 				    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-				    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+				    	<a class="page-link" href="<c:url value="/accommodations/list?page=${pm.finalPage}&search=${pm.cri.search}&searchType=${pm.cri.searchType}"></c:url>">마지막</a>
 				    </li>
 				</ul>
-				<form>
-					<div class="input-group mb-3">
-						<input class="form-control col-14" type="text" placeholder="제목으로 검색하세요." name="search" value="${pm.cri.search}">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">검색</button>
-						</div>
-						<input type="hidden" name="qu_where" value="${qu_where}">
-					</div>
-				</form>
-	        </div>
+				<div class="form-group">
+					<form class="input-group">
+						<select class="input-group-prepend form-control col-2" name="searchType">
+							<option value="all" <c:if test="${pm.cri.searchType == 'all' }">selected</c:if>>전체</option>
+							<option value="ac_name" <c:if test="${pm.cri.searchType == 'ac_name' }">selected</c:if>>이름</option>
+							<option value="ac_addr" <c:if test="${pm.cri.searchType == 'ac_addr' }">selected</c:if>>지역</option>
+						</select>
+						<input type="text" class="form-control col-8" name="search" value="${pm.cri.search}">	
+						<button class="btn btn-primary col-2">검색</button>
+					</form>
+				</div>
+	  	</div>
 		</div>
 	</div>
 </div>

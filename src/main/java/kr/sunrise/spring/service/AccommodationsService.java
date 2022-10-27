@@ -55,4 +55,13 @@ public interface AccommodationsService {
 
 	ArrayList<FileVO> getReviewFileList(Integer ac_num);
 
+	ContractVO getContractRoom(Integer ro_code);
+
+	ContractVO getContractInfo(String co_num);
+
+	RoomVO getRoomExtend(Integer co_ro_code);
+
+	boolean updatecontractState(ContractVO contract);
+
+	boolean updateRoomStateExite(RoomVO room);
 }

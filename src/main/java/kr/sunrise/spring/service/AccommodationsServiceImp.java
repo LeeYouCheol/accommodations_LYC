@@ -214,4 +214,37 @@ public class AccommodationsServiceImp implements AccommodationsService{
 			return null;
 		return accommodationsDao.selectReviewFileList(ac_num);
 	}
+	@Override
+	public ContractVO getContractRoom(Integer ro_code) {
+		if(ro_code == null)
+			return null;
+		return accommodationsDao.selectcontractroom(ro_code);
+	}
+	@Override
+	public ContractVO getContractInfo(String co_num) {
+		if(co_num == null)
+			return null;
+		return accommodationsDao.selectContractInfo(co_num);
+	}
+	@Override
+	public RoomVO getRoomExtend(Integer co_ro_code) {
+		if(co_ro_code == null)
+			return null;
+		return accommodationsDao.selectRoomExtend(co_ro_code);
+	}
+	@Override
+	public boolean updatecontractState(ContractVO contract) {
+		if(contract == null)
+			return false;
+		accommodationsDao.updateContractState(contract);
+		return true;
+	}
+	@Override
+	public boolean updateRoomStateExite(RoomVO room) {
+		if(room == null)
+			return false;
+		room.setRo_state("A");
+		accommodationsDao.updateRoomStateExite(room);
+		return true;
+	}
 }

@@ -44,26 +44,21 @@
       <img src="<c:url value="/resources/images/해돋이고시원_전경.jpg"></c:url>" alt="Image" class="img-fluid" style="width:1392px; height:560px;">
 
       <div class="property-contents">
-        <strong class="current-price text-secondary">가격문의</strong>
+        <strong class="current-price text-secondary">
+        	<a style="color: #fff" href="<c:url value="/accommodations/select/${accommodations.ac_num }"></c:url>"> <span>해돋이고시원</span></a>
+        </strong>
         <h2>
-          <a href="<c:url value="/accommodations/select/${accommodations.ac_num }"></c:url>"> <span>해돋이고시원</span></a>
+          <span style="color: #fff;">충청북도 청주시 청원구 우암동</span>
         </h2>
       </div>
 
       <div class="property_details">
 
         <ul class="list-unstyled specs">
-          <li class="d-inline-flex align-items-center">
-            <span class="icon-wrap flaticon-bathtub"></span>
-            <strong>2</strong>
-          </li>
+          
           <li class="d-inline-flex align-items-center">
             <span class="icon-wrap flaticon-bed"></span>
-            <strong>4</strong>
-          </li>
-          <li class="d-inline-flex align-items-center">
-            <span class="icon-wrap flaticon-house-size"></span>
-            <strong>120<sup>2</sup></strong>
+            <strong>40</strong>
           </li>
         </ul>
 
@@ -85,16 +80,8 @@
 
         <ul class="list-unstyled specs">
           <li class="d-inline-flex align-items-center">
-            <span class="icon-wrap flaticon-bathtub"></span>
-            <strong>2</strong>
-          </li>
-          <li class="d-inline-flex align-items-center">
             <span class="icon-wrap flaticon-bed"></span>
-            <strong>4</strong>
-          </li>
-          <li class="d-inline-flex align-items-center">
-            <span class="icon-wrap flaticon-house-size"></span>
-            <strong>120<sup>2</sup></strong>
+            <strong>20</strong>
           </li>
         </ul>
 
@@ -530,78 +517,6 @@
 </div>
 
 
-<div class="untree_co-section bg-light">
-  <div class="container">
-    <div class="row align-items-center justify-content-between">
-      <div class="col-lg-4">
-        <ul class="list-unstyle	d list-icons">
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-bed"></span>
-              </span>
-              <span class="text">
-               Right at the coast of the Semantics Vokalia and Consonantia
-              </span>
-             </a>
-           </li>
-
-           <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-building"></span>
-              </span>
-              <span class="text">
-                And if she hasn’t been rewritten then Vokalia and Consonantia
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-garage"></span>
-              </span>
-              <span class="text">
-                Separated they live in Bookmarksgrove right at  large
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-map"></span>
-              </span>
-              <span class="text">
-                And if she hasn’t been rewritten then large language ocean.
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="d-flex align-items-center">
-              <span class="icon-wrap">
-                <span class="flaticon-shower"></span>
-              </span>
-              <span class="text">
-                And if she hasn’t been rewritten then Vokalia and Consonantia
-              </span>
-            </a>
-          </li>
-
-        </ul>
-      </div> <!-- /.col-lg-4 -->
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <img src="<c:url value="/resources/images/img_portrait_1.jpg"></c:url>" alt="Image" class="img-fluid rounded">
-      </div> <!-- /.col-lg-4 -->
-      
-    </div> <!-- /.row -->
-  </div> <!-- /.container -->
-</div>
-
-
 <div class="untree_co-section">
   <div class="container">
     <div class="row align-items-stretch">
@@ -660,7 +575,5 @@
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-
 </body>
-
 </html>

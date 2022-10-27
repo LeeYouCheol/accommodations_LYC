@@ -32,7 +32,6 @@ th{
 </style>
 </head>
 <body>
-${contractRoom}
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">
 		<div class="site-mobile-menu-close">
@@ -46,7 +45,7 @@ ${contractRoom}
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">계약서 작성</h2>
+				<h2 class="text-secondary heading-2">연장 계약서 작성</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
@@ -63,41 +62,41 @@ ${contractRoom}
 							<tr>
 								<th scope="row">아이디</th>
 								<td>
-									<input class="form-control" type="text" name="co_me_id" id="co_me_id" value="${user.me_id}" readonly>
+									<input class="form-control" type="text" value="${user.me_id}" readonly>
 								</td>
 								<th scope="row">이름</th>
 								<td>
-									<input class="form-control" type="text" name="co_me_name" id="co_me_name" value="${user.me_name}" readonly>
+									<input class="form-control" type="text" value="${user.me_name}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">주민등록번호</th>
 								<td>
-									<input class="form-control" type="text" name="co_me_rn" id="co_me_rn" value="${user.me_rn}" readonly>
+									<input class="form-control" type="text" value="${user.me_rn}" readonly>
 								</td>
 								<th scope="row">전화번호</th>
 								<td>
-									<input class="form-control" type="text" name="co_me_phone" id="co_me_phone" value="${user.me_phone}" readonly>
+									<input class="form-control" type="text" value="${user.me_phone}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">고시원번호</th>
 								<td>
-									<input class="form-control" type="text" name="co_ac_num" id="co_ac_num" value="${accommodations.ac_num}" readonly>
+									<input class="form-control" type="text" value="${contract.co_ac_num}" readonly>
 								</td>
 								<th scope="row">고시원</th>
 								<td>
-									<input class="form-control" type="text" name="co_ac_name" id="co_ac_name" value="${accommodations.ac_name}" readonly>
+									<input class="form-control" type="text" value="${contract.co_ac_name}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">선택객실</th>
 								<td>
-									<input class="form-control" type="text" name="co_ro_num" id="co_ro_num" value="${room.ro_num}" readonly>
+									<input class="form-control" type="text" value="${contract.co_ro_num}" readonly>
 								</td>
 								<th scope="row">개월수:</th>
 								<td>
-									<input class="form-control" type="text" name="co_month" id="co_month" placeholder="계약할 개월수(숫자)">
+									<input class="form-control" type="text" name="co_month" id="co_month" placeholder="연장계약할 개월수(숫자)">
 								</td>
 							</tr>
 							<tr>
@@ -115,9 +114,6 @@ ${contractRoom}
 								<td>
 									<input type="text" class="form-control" id="co_enter_date" name="co_enter_date">
 								</td>
-								<td>
-									<input type=hidden class="form-control" id="inputValue" name="inputValue" value="">
-								</td>
 							</tr>
 							<tr>
 								<th scope="row">퇴실일:</th>
@@ -126,6 +122,11 @@ ${contractRoom}
 								</td>
 								<td class="co_ro_code">
 									<input type="hidden" class="form-control" id="co_ro_code" name="co_ro_code" value="${room.ro_code}" readonly>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="hidden" class="form-control" id="inputValue" name="inputValue" value="">
 								</td>
 							</tr>
 							<tr>
@@ -183,14 +184,14 @@ $(function(){
        	}
 	})
 })
-//입실일 퇴실일
+//퇴실일 더하기
 $(function(){
 	$( "#co_enter_date" ).datepicker({
 		changeMonth: true,
 		changeYear: true,
 		dateFormat: 'yy-mm-dd',
-		minDate: "0",
-		maxDate: "+1Y",
+		minDate: "${contract.co_exite_date_str}",
+		maxDate: "${contract.co_exite_date_str}",
 		dayNamesMin: ['월', '화', ' 수', '목', '금', '토', '일'],
 		monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
 		onSelect: function(dateText, instance) {

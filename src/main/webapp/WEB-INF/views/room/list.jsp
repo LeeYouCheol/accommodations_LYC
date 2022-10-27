@@ -60,7 +60,7 @@ table{
 		</div>
       	<div class="row justify-content-center" id="box">
       		<div class="mypage accomodations">
-      			<h5 class="text-secondary heading-5">내고시원</h5>
+      			<h5 class="text-secondary heading-5">객실현황</h5>
 	        	<div class="content" id="content">
 	        		<table border="1">
 								<colgroup>
@@ -100,7 +100,7 @@ table{
 											<c:if test="${room.ro_state == 'A'}">
 												<span style="color: black;">예약가능</span>
 											</c:if>
-											<c:if test="${room.ro_state == 'N'}">
+											<c:if test="${room.ro_state == 'R'}">
 												<span style="color: black;">예약불가</span>
 											</c:if>
 											<c:if test="${room.ro_state == 'F'}">

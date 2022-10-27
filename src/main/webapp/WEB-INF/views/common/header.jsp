@@ -38,17 +38,13 @@
 	            </ul>
 	          </li>
 	          <c:if test="${user.me_authority == 'B'}">
-		          <li class="has-children">
-		            <a href="#">고시원</a>
-		            <ul class="dropdown">
-		              <li><a href="<c:url value="/accommodations/insert"></c:url>">고시원등록</a></li>
-		              <li><a href="<c:url value="/room/insert"></c:url>">객실등록</a></li>
-		            </ul>
+		          <li class="nav-item">
+		            <a href="<c:url value="/accommodations/insert"></c:url>">고시원등록신청</a>
 		          </li>
 		      </c:if>
           <li><a href="<c:url value="/accommodations/list"></c:url>">고시원찾기</a></li>
-          <c:if test="${user.me_authority != 'N'}">
-          	<li><a href="<c:url value="/admin/info"></c:url>">사업자이용정보</a></li>
+          <c:if test="${user.me_authority == 'B' && user != null}">
+          	<li><a href="<c:url value="/admin/list"></c:url>">사업자이용정보</a></li>
 					</c:if>
 					<c:if test="${user == null}">
 						<li><a href="<c:url value="/signup/sort"></c:url>">Sign up</a></li> 

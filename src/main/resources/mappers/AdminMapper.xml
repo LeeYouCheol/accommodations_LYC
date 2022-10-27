@@ -7,4 +7,47 @@
 		insert into buisnessinfo(bi_me_id, bi_me_name, bi_title, bi_content)
 		value(#{bi_me_id}, #{bi_me_name}, #{bi_title}, #{bi_content})
 	</insert>
+	<select id="selectInfoList" resultType="kr.sunrise.spring.vo.BuisnessInfoVO">
+		select * from buisnessinfo
+		order by bi_num desc
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectInfoTotalCount" resultType="int">
+		select count(*) from buisnessinfo where bi_title like concat('%',#{bi_title}, '%')
+	</select>
+	<select id="selectInfo" resultType="kr.sunrise.spring.vo.BuisnessInfoVO">
+		select * from buisnessinfo where bi_num = #{bi_num}
+	</select>
+	<update id="updateInfo">
+		update buisnessinfo set
+			bi_title = #{bi_title},
+			bi_content = #{bi_content}
+		where bi_num = #{bi_num}
+	</update>
+	<insert id="signAdvertise">
+		insert into advertise(ad_code, ad_ac_num, ad_ac_name, ad_ac_representation, ad_me_id, ad_bm_me_id, ad_me_name, ad_bm_number, ad_me_rn, ad_me_phone, ad_month, ad_to_price, ad_end_date)
+		value(#{ad_code}, #{ad_ac_num}, #{ad_ac_name}, #{ad_ac_representation}, #{ad_me_id}, #{ad_bm_me_id}, #{ad_me_name}, #{ad_bm_number}, #{ad_me_rn}, #{ad_me_phone}, #{ad_month}, #{ad_to_price}, #{ad_end_date})
+	</insert>
+	<select id="selectContract" resultType="kr.sunrise.spring.vo.AdvertiseVO">
+		select * from advertise where ad_code = #{ad_code};
+	</select>
+	<select id="selectAdList" resultType="kr.sunrise.spring.vo.AdvertiseVO">
+		select * from advertise
+	</select>
+	<select id="selectAdvertiseListMy" resultType="kr.sunrise.spring.vo.AdvertiseVO">
+		select * from advertise where ad_me_id = #{me_id}
+	</select>
+	<update id="updateAdSatePermit">
+		update advertise set
+			ad_start_date = #{ad_start_date},
+			ad_end_date = #{ad_end_date},
+			ad_state = #{ad_state}
+		where ad_code =#{ad_code}
+	</update>
+	<update id="updateAdSateCancel">
+		update advertise set
+			ad_end_date = #{ad_end_date},
+			ad_state = #{ad_state}
+		where ad_code =#{ad_code}
+	</update>
 </mapper>

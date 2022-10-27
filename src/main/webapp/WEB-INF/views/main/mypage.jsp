@@ -43,7 +43,6 @@ table{
 </style>
 <title>마이페이지</title>
 </head>
-
 <body>
 <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -99,8 +98,10 @@ table{
 									<td class="body-item">${contract.co_exite_date_str}</td>
 									<td class="body-item">${contract.co_price_str}</td>
 									<td class="body-item">
-										<a class="btn btn-outline-primary btn-sm" href="<c:url value="#"></c:url>">계약연장</a>
-										<a class="btn btn-outline-danger btn-sm" href="<c:url value="#"></c:url>">퇴실</a>
+										<c:if test="${contract.co_state == 'C'}">
+											<a class="btn btn-outline-primary btn-sm" href="<c:url value="/accommodations/extend?co_num=${contract.co_num}&co_ro_code=${contract.co_ro_code}"></c:url>">계약연장</a>
+											<a class="btn btn-outline-danger btn-sm" href="<c:url value="/accommodations/exite?co_num=${contract.co_num}&co_ro_code=${contract.co_ro_code}"></c:url>">퇴실</a>
+										</c:if>
 										<a class="btn btn-outline-success btn-sm" href="<c:url value="/review/insert?co_num=${contract.co_num}"></c:url>">리뷰작성</a>
 									</td>
 								</tr>
@@ -123,55 +124,55 @@ table{
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${qnaList}" var="question">
-								<c:if test="${question.qu_where == 'moa'}">
+							<c:forEach items="${myQnaList}" var="myQnaList">
+								<c:if test="${myQnaList.qu_where == 'moa'}">
 									<tr>
-										<td>${question.qu_num}</td>
+										<td>${myQnaList.qu_num}</td>
 										<td>
-											<c:if test="${question.qu_type == 'signup'}">
+											<c:if test="${myQnaList.qu_type == 'signup'}">
 												회원가입
 											</c:if>
-											<c:if test="${question.qu_type == 'payment'}">
+											<c:if test="${myQnaList.qu_type == 'payment'}">
 												결제
 											</c:if>
-											<c:if test="${question.qu_type == 'accomodation'}">
+											<c:if test="${myQnaList.qu_type == 'accomodation'}">
 												고시원
 											</c:if>
-											<c:if test="${question.qu_type == 'business'}">
+											<c:if test="${myQnaList.qu_type == 'business'}">
 												사업자
 											</c:if>
 										</td>
 										<td>
-											<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
+											<a href="<c:url value="/qna/select?qu_num=${myQnaList.qu_num}"></c:url>">${myQnaList.qu_title}</a>
 										</td>
-										<td>${question.qu_me_id}</td>
-										<td>${question.qu_date_str}</td>
+										<td>${myQnaList.qu_me_id}</td>
+										<td>${myQnaList.qu_date_str}</td>
 									</tr>
 								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<a href="<c:url value="/qna/question/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
+				<a href="<c:url value="/qna/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
 				<ul class="pagination justify-content-center">
 			  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-			  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+			  		<a class="page-link" href="<c:url value="/qna/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
 			  	</li>
 			  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-			  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+			  		<a class="page-link" href="<c:url value="/qna/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
 			  	</li>
 			  	
 			  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
 			    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-			    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+			    		<a class="page-link" href="<c:url value="/qna/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
 			    	</li>
 			    </c:forEach>
 			
 			    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-			    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+			    	<a class="page-link " href="<c:url value="/qna/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
 			    </li>
 			    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-			    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+			    	<a class="page-link" href="<c:url value="/qna/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
 			    </li>
 				</ul>
 				<form>
@@ -198,55 +199,55 @@ table{
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${qnaList}" var="question">
-								<c:if test="${question.qu_where == 'acc'}">
+							<c:forEach items="${myQnaList}" var="myQnaList">
+								<c:if test="${myQnaList.qu_where == 'acc'}">
 									<tr>
-										<td class="body-item">${question.qu_num}</td>
+										<td class="body-item">${myQnaList.qu_num}</td>
 										<td>
-											<c:if test="${question.qu_type == 'signup'}">
+											<c:if test="${myQnaList.qu_type == 'signup'}">
 												회원가입
 											</c:if>
-											<c:if test="${question.qu_type == 'payment'}">
+											<c:if test="${myQnaList.qu_type == 'payment'}">
 												결제
 											</c:if>
-											<c:if test="${question.qu_type == 'accomodation'}">
+											<c:if test="${myQnaList.qu_type == 'accomodation'}">
 												고시원
 											</c:if>
-											<c:if test="${question.qu_type == 'business'}">
+											<c:if test="${myQnaList.qu_type == 'business'}">
 												사업자
 											</c:if>
 										</td>
 										<td class="body-item">
-											<a href="<c:url value="/qna/question/select/${question.qu_num}"></c:url>">${question.qu_title}</a>
+											<a href="<c:url value="/qna/select/${myQnaList.qu_num}"></c:url>">${myQnaList.qu_title}</a>
 										</td>
-										<td class="body-item">${question.qu_me_id}</td>
-										<td class="body-item">${question.qu_date_str}</td>
+										<td class="body-item">${myQnaList.qu_me_id}</td>
+										<td class="body-item">${myQnaList.qu_date_str}</td>
 									</tr>
 								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<a href="<c:url value="/qna/question/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
+				<a href="<c:url value="/qna/insert"></c:url>" class="btn btn-primary float-right mt-4 mb-4">QnA등록</a>
 				<ul class="pagination justify-content-center mt-5">
 			  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-			  		<a class="page-link" href="<c:url value="/qna/question/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
+			  		<a class="page-link" href="<c:url value="/qna/list?page=1&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">처음</a>
 			  	</li>
 			  	<li class="page-item <c:if test="${!pm.prev}">disabled</c:if>">
-			  		<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
+			  		<a class="page-link" href="<c:url value="/qna/list?page=${pm.startPage-1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">이전</a>
 			  	</li>
 			  	
 			  	<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="i">
 			    	<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-			    		<a class="page-link" href="<c:url value="/qna/question/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
+			    		<a class="page-link" href="<c:url value="/qna/list?page=${i}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">${i}</a>
 			    	</li>
 			    </c:forEach>
 			
 			    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-			    	<a class="page-link " href="<c:url value="/qna/question/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
+			    	<a class="page-link " href="<c:url value="/qna/list?page=${pm.endPage+1}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">다음</a>
 			    </li>
 			    <li class="page-item <c:if test="${!pm.next}">disabled</c:if>">
-			    	<a class="page-link" href="<c:url value="/qna/question/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
+			    	<a class="page-link" href="<c:url value="/qna/list?page=${pm.finalPage}&search=${pm.cri.search}&qu_where=${qu_where}"></c:url>">마지막</a>
 			    </li>
 				</ul>
 				<form>
@@ -270,4 +271,3 @@ table{
 </div>
 </body>
 </html>
-

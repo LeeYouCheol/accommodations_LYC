@@ -35,4 +35,6 @@ public interface MemberDAO {
 	void updatePosPermit(BusinessMemberVO bm);
 
 	void updatePosCancel(BusinessMemberVO bm);
+
+	BusinessMemberVO selectBusinessmember(MemberVO user);
 }

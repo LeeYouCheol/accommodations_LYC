@@ -15,11 +15,24 @@
 	<select id="selectAccommodationsList" resultType="kr.sunrise.spring.vo.AccommodationsVO">
 		select accommodations.*, fi_name as ac_thumb from accommodations join 
 			file on ac_num = fi_same_num
-		    where fi_ta_name like 'accommodations' group by fi_same_num;
+		    where fi_ta_name like 'accommodations' 
+		    <if test="cri.searchType == 'all'">
+  		and (ac_name like concat('%', #{cri.search} ,'%') or ac_addr like concat('%',#{cri.search} ,'%'))
+  		</if>
+  		<if test="cri.searchType != 'all'">
+  		and ${cri.searchType} like concat('%',#{cri.search} ,'%')
+  		</if>
+  		group by fi_same_num
+  		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectAccommodationsTotalCount" resultType="int">
 		select count(*) from accommodations where ac_permit ='Y'
-			and ac_name like concat('%',#{search},'%')
+			<if test="cri.searchType == 'all'">
+  			and (ac_name like concat('%',#{cri.search},'%') or ac_addr like concat('%',#{cri.search},'%'))
+  		</if>
+  		<if test="cri.searchType != 'all'">
+  			and ${cri.searchType} like concat('%',#{cri.search},'%')
+  		</if>
 	</select>
 	<select id="selectAccommodations" resultType="kr.sunrise.spring.vo.AccommodationsVO">
 		select * from accommodations where ac_num = #{ac_num}
@@ -88,4 +101,24 @@
 	<select id="selectReviewFileList" resultType="kr.sunrise.spring.vo.FileVO">
 		select * from file join review on fi_same_num = re_num where re_ac_num = #{ac_num} and fi_ta_name = 'review'
 	</select>
+	<select id="selectcontractroom" resultType="kr.sunrise.spring.vo.ContractVO">
+		select * from contract where co_ro_code = #{ro_code}
+	</select>
+	<select id="selectContractInfo" resultType="kr.sunrise.spring.vo.ContractVO">
+		select * from contract where co_num = #{co_num}
+	</select>
+	<select id="selectRoomExtend" resultType="kr.sunrise.spring.vo.RoomVO">
+		select * from room where ro_code = #{co_ro_code}
+	</select>
+	<update id="updateContractState">
+		update contract set
+			co_state = #{co_state}
+		where co_num = #{co_num}
+	</update>
+	<update id="updateRoomStateExite">
+		update room a inner join contract
+			on ro_code = co_ro_code
+			set
+			ro_state = #{ro_state}
+	</update>
 </mapper>

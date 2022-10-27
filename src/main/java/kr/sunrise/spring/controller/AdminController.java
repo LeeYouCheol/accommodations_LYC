@@ -17,14 +17,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.sunrise.spring.pagination.Criteria;
+import kr.sunrise.spring.pagination.PageMaker;
 import kr.sunrise.spring.service.AccommodationsService;
 import kr.sunrise.spring.service.AdminService;
+import kr.sunrise.spring.service.FileService;
 import kr.sunrise.spring.service.MemberService;
 import kr.sunrise.spring.service.MessageService;
+import kr.sunrise.spring.service.NoticeService;
+import kr.sunrise.spring.service.QnaService;
 import kr.sunrise.spring.vo.AccommodationsVO;
+import kr.sunrise.spring.vo.AdvertiseVO;
 import kr.sunrise.spring.vo.BuisnessInfoVO;
 import kr.sunrise.spring.vo.BusinessMemberVO;
+import kr.sunrise.spring.vo.FileVO;
 import kr.sunrise.spring.vo.MemberVO;
+import kr.sunrise.spring.vo.NoticeVO;
+import kr.sunrise.spring.vo.QuestionVO;
 
 @Controller
 public class AdminController {
@@ -37,16 +45,32 @@ public class AdminController {
 	MessageService messageService;
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	QnaService qnaService;
+	@Autowired
+	NoticeService noticeService;
+	@Autowired
+	FileService fileService;
 	
 	//운영자 마이페이지
     @RequestMapping(value="/admin/mypage", method = RequestMethod.GET)
     public ModelAndView adminMypage(ModelAndView mv, Criteria cri, HttpSession session,
-    		MemberVO member, BusinessMemberVO bm) {
+    		MemberVO member, BusinessMemberVO bm, String qu_where, String no_where,
+    		AdvertiseVO advertise) {
     	ArrayList<BusinessMemberVO> bmList = memberService.getBmList(bm);
-    	ArrayList<AccommodationsVO> list = accommodationsService.getAccommodationsList(cri);
+    	ArrayList<AccommodationsVO> accList = accommodationsService.getAccommodationsList(cri);
+    	ArrayList<QuestionVO> qnaList = qnaService.getQuestionList(cri, qu_where);
+  		int totalCount = qnaService.getQuestionTotalCount(cri, qu_where);
+  		ArrayList<NoticeVO> noticeList = noticeService.getNoticeList(cri, no_where);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		ArrayList<AdvertiseVO> adList = adminService.getAdList(advertise);
     	
     	mv.addObject("bmList", bmList);
-    	mv.addObject("list", list);
+    	mv.addObject("accList", accList);
+    	mv.addObject("qnaList", qnaList);
+    	mv.addObject("noticeList", noticeList);
+  		mv.addObject("pm", pm);
+  		mv.addObject("adList", adList);
 		mv.setViewName("/admin/mypage");
         return mv;
     }
@@ -96,10 +120,16 @@ public class AdminController {
 		return map;
 	}
     //사업자 이용정보페이지
-    @RequestMapping(value="/admin/info", method = RequestMethod.GET)
-    public ModelAndView adminInfo(ModelAndView mv, BuisnessInfoVO info) {
-    	
-		mv.setViewName("/admin/info");
+    @RequestMapping(value="/admin/list", method = RequestMethod.GET)
+    public ModelAndView adminInfo(ModelAndView mv, Criteria cri, String bi_title) {
+    	ArrayList<BuisnessInfoVO> infoList = adminService.getInfoList(cri, bi_title);
+    	int totalCount = adminService.getInfoTotalCount(cri, bi_title);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		
+    	mv.addObject("infoList", infoList);
+    	mv.addObject("bi_title", bi_title);
+    	mv.addObject("pm", pm);
+		mv.setViewName("/admin/list");
         return mv;
     }
     //사업자 이용페이지 등록
@@ -115,9 +145,98 @@ public class AdminController {
     	MemberVO user = (MemberVO)session.getAttribute("user");
 		boolean res = adminService.insertInfo(info, user, files);
 		if(res)
-			messageService.message(response, "질문을 등록했습니다.", "/spring/admin/info");
+			messageService.message(response, "안내사항을 등록했습니다.", "/spring/admin/list");
 		else
-			messageService.message(response, "질문 등록에 실패했습니다.", "/spring/admin/info");
+			messageService.message(response, "안내사항 등록에 실패했습니다.", "/spring/admin/list");
 		return mv;
     }
+    //사업자 이용페이지 등록
+    @RequestMapping(value="/admin/select", method = RequestMethod.GET)
+    public ModelAndView adminInfoselectGet(ModelAndView mv, Integer bi_num) {
+    	BuisnessInfoVO info = adminService.getInfo(bi_num);
+    	ArrayList<FileVO> fileList = fileService.selectFileList("buisnessinfo", bi_num);
+    	
+    	mv.addObject("info", info);
+    	mv.addObject("fileList", fileList);
+		mv.setViewName("/admin/select");
+        return mv;
+    }
+    //사업자 이용페이지 수정
+    @RequestMapping(value = "/admin/update", method = RequestMethod.GET)
+	public ModelAndView adminUpdateGet(ModelAndView mv, Integer bi_num, HttpSession session,
+			HttpServletResponse response, String fi_ta_name, Integer fi_same_num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		BuisnessInfoVO info = adminService.getInfo(bi_num);
+		ArrayList<FileVO> fileList = fileService.selectFileList("buisnessinfo", bi_num);
+		
+		mv.addObject("fileList", fileList);
+		mv.addObject("info", info);
+		if(adminService.isWriter(info,user)) {
+		mv.setViewName("/admin/update");
+		}else {
+			messageService.message(response, "", "/spring/admin/select?bi_num="+bi_num);
+		}
+		return mv;
+	}
+    @RequestMapping(value = "/admin/update", method = RequestMethod.POST)
+	public ModelAndView adminUpdatePost(ModelAndView mv, Integer bi_num, BuisnessInfoVO info, HttpSession session,
+			MultipartFile []files, HttpServletResponse response, int[]nums) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = adminService.updateInfo(info, user, files, nums);
+		if(res)
+			messageService.message(response, "안내사항을 수정했습니다.", "/spring/admin/select?bi_num="+info.getBi_num());
+		else
+			messageService.message(response, "안내사항 수정에 실패했습니다.", "/spring/admin/select?bi_num="+info.getBi_num());
+		return mv;
+	}
+    //광고신청
+    @RequestMapping(value="/admin/adregister", method = RequestMethod.GET)
+    public ModelAndView adminAdregister(ModelAndView mv, Integer ac_num, HttpSession session,
+    		MemberVO member) {
+    	MemberVO user = (MemberVO)session.getAttribute("user");
+    	BusinessMemberVO bm = memberService.getBusinessmember(user);
+    	AccommodationsVO accommodations = accommodationsService.getAccommodations(ac_num);
+    	
+    	mv.addObject("bm", bm);
+    	mv.addObject("accommodations", accommodations);
+		mv.setViewName("/admin/adregister");
+        return mv;
+    }
+    //ajax
+  	@ResponseBody
+    @RequestMapping(value="/admin/adregister", method = RequestMethod.POST)
+    public  Map<Object,Object> AdregisterPost(@RequestBody AdvertiseVO advertise) {
+  		HashMap<Object,Object> map = new HashMap<Object, Object>();
+  		boolean res = adminService.signAdvertise(advertise);
+  		
+  		map.put("res",res);
+        return map;
+    }
+  	//결재후 출력될 페이지
+    @RequestMapping(value="/admin/complete", method = RequestMethod.GET)
+    public ModelAndView completeGet(ModelAndView mv, String ad_code) {
+    	AdvertiseVO advertise = adminService.getAdvertise(ad_code);
+    	
+    	mv.addObject("advertise", advertise);
+    	mv.setViewName("/admin/complete");
+        return mv;
+    }
+    //고시원 등록 수락
+    @RequestMapping(value= "/ad/state/permit", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> ajaxAdPermit(@RequestBody AdvertiseVO advertise) {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		boolean res = adminService.updateAdSatePermit(advertise);
+		map.put("res", res);
+		return map;
+	}
+  //고시원 등록 수락
+    @RequestMapping(value= "/ad/state/cancel", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> ajaxAdCancel(@RequestBody AdvertiseVO advertise) {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		boolean res = adminService.updateAdSateCancel(advertise);
+		map.put("res", res);
+		return map;
+	}
 }

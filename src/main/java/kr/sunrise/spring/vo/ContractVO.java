@@ -26,6 +26,8 @@ public class ContractVO {
 	private Date co_enter_date;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date co_exite_date;
+	private int co_ac_num;
+	private String co_state="C";
 	
 	//계약일 날자변환
 	public String getCo_sign_date_str() {

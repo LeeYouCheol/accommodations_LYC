@@ -286,4 +286,10 @@ public class MemberServiceImp implements MemberService{
 		memberDao.updateMember(member);
 		return true;
 	}
+	@Override
+	public BusinessMemberVO getBusinessmember(MemberVO user) {
+		if(user == null)
+			return null;
+		return memberDao.selectBusinessmember(user);
+	}
 }

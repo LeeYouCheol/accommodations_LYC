@@ -29,5 +29,7 @@ public interface QnaService {
 	boolean updateQuestion(QuestionVO question, MemberVO user, MultipartFile[] files, int[] nums);
 
 	boolean deleteQuestion(Integer qu_num, MemberVO user, String fi_ta_name, int fi_smae_num);
+
+	ArrayList<QuestionVO> getQuestionListMy(Criteria cri, String qu_where, MemberVO user);
 	
 }

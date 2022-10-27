@@ -51,7 +51,7 @@
 		where me_id = #{me_id}
 	</update>
 	<select id="selectBmList" resultType="kr.sunrise.spring.vo.BusinessMemberVO">
-		select * from businessmember
+		select * from businessmember where bm_pos = 'N' or bm_pos = 'B'
 	</select>
 	<update id="updatePosPermit">
 		update businessmember set
@@ -63,4 +63,7 @@
 			bm_pos = #{bm_pos}
 		where bm_me_id = #{bm_me_id}
 	</update>
+	<select id="selectBusinessmember" resultType="kr.sunrise.spring.vo.BusinessMemberVO">
+		select * from businessmember where bm_me_id = #{me_id}
+	</select>
 </mapper>

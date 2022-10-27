@@ -25,12 +25,12 @@
 <title>QnA</title>
 </head>
 <body>
-  <div class="lines-wrap">
-    <div class="lines-inner">
-      <div class="lines"></div>
-    </div>
+<div class="lines-wrap">
+  <div class="lines-inner">
+    <div class="lines"></div>
   </div>
-  <!-- END lines -->
+</div>
+<!-- END lines -->
 
 <div class="site-mobile-menu site-navbar-target">
 	<div class="site-mobile-menu-header">

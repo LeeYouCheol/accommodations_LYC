@@ -183,7 +183,10 @@ public class AccommodationsController {
     	ArrayList<ReviewVO> reviewList = reviewService.getReviewList(cri, ac_num);
     	//리뷰 사진파일 가져오기
     	ArrayList<FileVO> reviewFileList = accommodationsService.getReviewFileList(ac_num);
-    	
+    	int totalCount = accommodationsService.getAccommodationsTotalCount(cri);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		
+		mv.addObject("pm", pm);
     	mv.addObject("accommodations", accommodations);
    		mv.addObject("fileList", fileList);
    		mv.addObject("mapList", mapList);
@@ -197,8 +200,8 @@ public class AccommodationsController {
    		return mv;
    	}
     //계약 진행
-    @RequestMapping(value="/accommodations/contract/{ro_code}", method = RequestMethod.GET)
-    public ModelAndView contractGet(ModelAndView mv, @PathVariable("ro_code")Integer ro_code,
+    @RequestMapping(value="/accommodations/contract", method = RequestMethod.GET)
+    public ModelAndView contractGet(ModelAndView mv, Integer ro_code,
     		Integer ac_num) {
     	//고시원 정보
     	AccommodationsVO accommodations = accommodationsService.getAccommodations(ac_num);
@@ -210,7 +213,7 @@ public class AccommodationsController {
     	mv.setViewName("/accommodations/contract");
         return mv;
     }
-    //ajax
+    //계약ajax
   	@ResponseBody
     @RequestMapping(value="/accommodations/contract/{ro_code}", method = RequestMethod.POST)
     public  Map<Object,Object> completePost(@RequestBody ContractVO contract, RoomVO room) {
@@ -221,7 +224,20 @@ public class AccommodationsController {
   		map.put("res",res);
   		map.put("state", state);
           return map;
-      }
+    }
+  	//연장계약 진행
+    @RequestMapping(value="/accommodations/extend", method = RequestMethod.GET)
+    public ModelAndView extendGet(ModelAndView mv, String co_num, Integer co_ro_code) {
+    	//해당 객실의 예약정보
+    	ContractVO contract = accommodationsService.getContractInfo(co_num);
+    	//해당 고시원의 객실정보
+    	RoomVO room = accommodationsService.getRoomExtend(co_ro_code);
+    	
+    	mv.addObject("contract", contract);
+    	mv.addObject("room", room);
+    	mv.setViewName("/accommodations/extend");
+        return mv;
+    }
   	//결재후 출력될 페이지
     @RequestMapping(value="/accommodations/complete", method = RequestMethod.GET)
     public ModelAndView completeGet(ModelAndView mv, String co_num) {
@@ -231,6 +247,28 @@ public class AccommodationsController {
     	mv.setViewName("/accommodations/complete");
         return mv;
     }
+    //퇴실
+    @RequestMapping(value="/accommodations/exite", method = RequestMethod.GET)
+    public ModelAndView exiteGet(ModelAndView mv, String co_num) {
+    	//해당 객실의 예약정보
+    	ContractVO contract = accommodationsService.getContractInfo(co_num);
+    	
+    	mv.addObject("contract", contract);
+    	mv.setViewName("/accommodations/exite");
+        return mv;
+    }
+    //퇴실 버튼 ajax
+    @RequestMapping(value= "/accommodations/room/exite", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> ajaxExite(@RequestBody ContractVO contract, RoomVO room) {
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		boolean coState = accommodationsService.updatecontractState(contract);
+		boolean res = accommodationsService.updateRoomStateExite(room);
+		
+		map.put("coState", coState);
+		map.put("res", res);
+		return map;
+	}
     //수리 버튼 ajax
     @RequestMapping(value= "/room/state/fix", method=RequestMethod.POST)
 	@ResponseBody

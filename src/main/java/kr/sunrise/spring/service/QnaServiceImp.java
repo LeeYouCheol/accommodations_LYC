@@ -146,6 +146,17 @@ public class QnaServiceImp implements QnaService{
 		int res = qnaDao.deleteQuestion(qu_num);
 		return res == 1 ? true : false;
 	}
+	@Override
+	public ArrayList<QuestionVO> getQuestionListMy(Criteria cri, String qu_where, MemberVO user) {
+		if(qu_where == null)
+			qu_where = "";
+		if(cri == null)
+			cri = new Criteria();
+		if(user == null)
+			return null;
+		
+		return qnaDao.selectQuestionListMy(cri,qu_where, user.getMe_id());
+	}
 	
 	
 }

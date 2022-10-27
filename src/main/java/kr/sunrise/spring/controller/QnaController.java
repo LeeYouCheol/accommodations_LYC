@@ -67,6 +67,7 @@ public class QnaController {
 	public ModelAndView questionSelectGet(ModelAndView mv, Integer qu_num) {
 		QuestionVO question = qnaService.getQuestion(qu_num);
 		ArrayList<FileVO> fileList = fileService.selectFileList("question", qu_num);
+		
 		mv.addObject("fileList", fileList);
 		mv.addObject("question", question);
 		mv.setViewName("/qna/select");

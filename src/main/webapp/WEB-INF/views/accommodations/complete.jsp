@@ -45,7 +45,7 @@ th{
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-6">
-				<h2 class="text-secondary heading-2">결재완료</h2>
+				<h2 class="text-secondary heading-2">결제완료</h2>
 			</div>
 		</div>
 		<div class="row justify-content-center">
